@@ -4,7 +4,7 @@ export type Product = {
   id: string;
   name: string;
   short: string;
-  category: "Face" | "Ritual" | "Cleanse" | "Mask" | "Makeup";
+  category: "Face" | "Treatment" | "Cleanse" | "Mask" | "Makeup";
   price: number;
   size: string;
   dosha: string;
@@ -33,8 +33,8 @@ export const products: Product[] = [
     size: "30 ml",
     dosha: "Pitta-balancing",
     blurb:
-      "Pink lotus and sandalwood calm the flush and leave a glow that looks like you slept nine hours in a palace.",
-    ritual: "Three drops, pressed—never rubbed—into damp skin.",
+      "Pink lotus and sandalwood calm the flush and leave a glow that looks like you slept nine hours. (We won't tell.)",
+    ritual: "Press three drops into damp skin, morning or night.",
     notes: ["Pink lotus", "Sandalwood", "Rose water"],
     vessel: "dropper",
     glass: "#c4416f",
@@ -48,13 +48,13 @@ export const products: Product[] = [
     id: "kumkumadi-oil",
     name: "Kumkumadi Night Oil",
     short: "Kumkumadi Oil",
-    category: "Ritual",
+    category: "Treatment",
     price: 72,
     size: "20 ml",
     dosha: "Vata-nourishing",
     blurb:
-      "Sixteen botanicals and real Kashmiri saffron. The oil grandmothers guarded—now in a bottle you'll want on display.",
-    ritual: "Warm four drops between palms. Breathe. Press in before sleep.",
+      "Sixteen botanicals and real saffron in a lightweight overnight oil. Wake up looking like you have your life together.",
+    ritual: "Warm four drops between your palms and press into skin before bed.",
     notes: ["Saffron", "Sandalwood", "Manjistha"],
     vessel: "oil",
     glass: "#a8631a",
@@ -73,9 +73,9 @@ export const products: Product[] = [
     size: "120 ml",
     dosha: "Kapha-clarifying",
     blurb:
-      "A cool gel of neem and tulsi that clears the day away without that tight, squeaky regret.",
-    ritual: "Massage onto damp skin for one slow minute. Rinse cool.",
-    notes: ["Neem", "Tulsi", "Aloe"],
+      "A cool gel of neem and holy basil that clears the day away without that tight, squeaky feeling.",
+    ritual: "Massage onto damp skin for a minute. Rinse with cool water.",
+    notes: ["Neem", "Holy basil", "Aloe"],
     vessel: "tube",
     glass: "#1f6b3c",
     fill: "#7fc28f",
@@ -86,15 +86,15 @@ export const products: Product[] = [
   },
   {
     id: "haldi-mask",
-    name: "Golden Haldi Mask",
-    short: "Haldi Mask",
+    name: "Golden Turmeric Mask",
+    short: "Turmeric Mask",
     category: "Mask",
     price: 44,
     size: "60 g",
     dosha: "All doshas",
     blurb:
-      "The haldi ceremony, distilled. Turmeric, kaolin and rose for a weekly glow that photographs like gold leaf.",
-    ritual: "A thick veil, ten minutes, warm cloth. Sunday evenings.",
+      "Turmeric, kaolin clay and rose for a weekly brightening mask. Ten minutes, real glow, no filter needed.",
+    ritual: "Apply a thick layer, leave ten minutes, remove with a warm cloth. Once a week.",
     notes: ["Turmeric", "Kaolin clay", "Rose"],
     vessel: "jar",
     glass: "#c99a3b",
@@ -106,15 +106,15 @@ export const products: Product[] = [
   },
   {
     id: "kajal-liner",
-    name: "Kohl Noir Kajal",
-    short: "Kohl Kajal",
+    name: "Soft Kohl Liner",
+    short: "Kohl Liner",
     category: "Makeup",
     price: 28,
     size: "0.35 g",
     dosha: "Eye ritual",
     blurb:
-      "Ghee-soft, smoke-black, smudge-proof by noon. Modern liner, very old soul.",
-    ritual: "Line the waterline. Smudge with a fingertip. Look up.",
+      "Buttery-soft, smoke-black, and smudge-proof all day. Gentle enough for the waterline.",
+    ritual: "Line the waterline or lash line. Smudge with a fingertip for a softer look.",
     notes: ["Ghee", "Almond oil", "Camphor"],
     vessel: "kajal",
     glass: "#0b0f0c",
@@ -131,10 +131,10 @@ export const products: Product[] = [
     category: "Makeup",
     price: 32,
     size: "8 g",
-    dosha: "Colour ritual",
+    dosha: "Color",
     blurb:
-      "One sheer stain that builds from a whisper to a full banquet. Lips, cheeks, a dab on the eyelid.",
-    ritual: "Tap with a ring finger. Layer until the mirror agrees.",
+      "One sheer stain that builds from barely-there to bold. Lips, cheeks, even a dab on the eyelids.",
+    ritual: "Tap on with a fingertip. Layer until you like what you see.",
     notes: ["Beetroot", "Rose", "Kokum butter"],
     vessel: "pot",
     glass: "#a11047",
@@ -153,7 +153,6 @@ export const productById = Object.fromEntries(
 export type Ingredient = {
   id: string;
   name: string;
-  hindi: string;
   role: string;
   origin: string;
   story: string;
@@ -165,77 +164,70 @@ export const ingredients: Ingredient[] = [
   {
     id: "lotus",
     name: "Pink Lotus",
-    hindi: "कमल",
     role: "Calms & softens",
-    origin: "Temple ponds, Kerala",
+    origin: "Kerala, India",
     story:
-      "It rises clean from muddy water—so we use it on skin that's had a day. Soothing, quietly hydrating, deeply symbolic.",
+      "It grows clean out of muddy water—so we use it on skin that's had a day. Soothing and quietly hydrating.",
     color: "#d0577f",
     products: ["lotus-serum"],
   },
   {
     id: "saffron",
     name: "Saffron",
-    hindi: "केसर",
     role: "Luminosity",
-    origin: "Pampore fields, Kashmir",
+    origin: "Kashmir, India",
     story:
-      "Hand-picked threads, 150 flowers to the gram. A trace evens tone and lends that candle-lit radiance.",
+      "Hand-picked threads, 150 flowers to the gram. A little evens out tone and adds a candle-lit glow.",
     color: "#e8a33d",
     products: ["kumkumadi-oil"],
   },
   {
     id: "turmeric",
     name: "Turmeric",
-    hindi: "हल्दी",
     role: "Brightens",
-    origin: "Erode, Tamil Nadu",
+    origin: "Tamil Nadu, India",
     story:
-      "The pre-wedding glow ritual every aunty swears by. Antioxidant, brightening, gold in every sense.",
+      "The glow trick generations swore by, now backed by research. Antioxidant, brightening, calming.",
     color: "#f2c14e",
     products: ["haldi-mask"],
   },
   {
     id: "neem",
     name: "Neem",
-    hindi: "नीम",
     role: "Clarifies",
-    origin: "Village groves, Rajasthan",
+    origin: "Rajasthan, India",
     story:
-      "The courtyard tree with a medicine-cabinet reputation. Clears congestion without stripping the barrier.",
+      "The backyard tree with a medicine-cabinet reputation. Clears pores without stripping your skin barrier.",
     color: "#5fae73",
     products: ["neem-cleanser"],
   },
   {
     id: "sandalwood",
     name: "Sandalwood",
-    hindi: "चंदन",
     role: "Cools & scents",
-    origin: "Mysore forests, Karnataka",
+    origin: "Karnataka, India",
     story:
-      "Cooling paste for summer foreheads, scent of every temple. It calms heat and lingers like a memory.",
+      "Naturally cooling and calming, with a warm woody scent that lingers. Great for redness.",
     color: "#c9a27a",
     products: ["lotus-serum", "kumkumadi-oil"],
   },
   {
     id: "beetroot",
     name: "Beetroot",
-    hindi: "चुकंदर",
     role: "Natural colour",
-    origin: "Kitchen gardens, Punjab",
+    origin: "Punjab, India",
     story:
-      "The original lip stain—stolen from the kitchen. Buildable, sheer, unmistakably alive.",
+      "The original lip stain—stolen from the kitchen. Buildable, sheer, and totally natural.",
     color: "#a11047",
     products: ["beetroot-tint"],
   },
   {
     id: "ghee",
     name: "Ghee",
-    hindi: "घी",
     role: "Nourishes",
-    origin: "Family dairies, Gujarat",
+    origin: "Gujarat, India",
     story:
-      "Clarified butter, washed one hundred times. The secret behind kajal that glides and never tugs.",
+      "Clarified butter, whipped until silky. The secret behind a liner that glides and never tugs.",
     color: "#f3dda4",
     products: ["kajal-liner"],
   },
@@ -254,23 +246,23 @@ export const doshaRituals: Record<
   }
 > = {
   vata: {
-    title: "The Moonlit Ritual",
+    title: "The Moonlit Routine",
     element: "Air & space",
-    copy: "Your skin wants warmth and weight. Oil-first, slow hands, a little gold.",
+    copy: "Your skin is on the dry side and wants richness. Oil-first, slow hands, lots of moisture.",
     products: ["kumkumadi-oil", "lotus-serum", "haldi-mask"],
     discount: 0.15,
   },
   pitta: {
-    title: "The Lotus Pond Ritual",
+    title: "The Calm Routine",
     element: "Fire & water",
-    copy: "Cool the flush, keep the colour sheer and alive. Calm before glow.",
+    copy: "Your skin runs warm and reactive. Calm the redness first, then glow.",
     products: ["lotus-serum", "neem-cleanser", "beetroot-tint"],
     discount: 0.15,
   },
   kapha: {
-    title: "The Monsoon Ritual",
+    title: "The Fresh Start Routine",
     element: "Earth & water",
-    copy: "Wake the surface. Clarify gently, brighten weekly, one deliberate line of kohl.",
+    copy: "Your skin leans oily. Clear gently, brighten weekly, and keep it fresh.",
     products: ["neem-cleanser", "haldi-mask", "kajal-liner"],
     discount: 0.15,
   },

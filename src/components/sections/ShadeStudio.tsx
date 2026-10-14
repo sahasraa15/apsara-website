@@ -18,10 +18,10 @@ const skins = [
 ];
 
 const levels = [
-  { name: "Whisper", note: "One tap. Looks like you just walked in from the cold.", taps: 1 },
-  { name: "Blush", note: "Two taps. Flushed, rested, slightly in love.", taps: 2 },
-  { name: "Mehendi Night", note: "Three taps. Dancing until 2am, still glowing.", taps: 3 },
-  { name: "Banquet", note: "Four taps. Full ceremony. The room turns around.", taps: 4 },
+  { name: "Sheer", note: "One tap. Looks like you just walked in from the cold.", taps: 1 },
+  { name: "Flush", note: "Two taps. Rested, rosy, slightly in love.", taps: 2 },
+  { name: "Night Out", note: "Three taps. Dancing until 2am, still glowing.", taps: 3 },
+  { name: "Statement", note: "Four taps. Full color. Heads turn.", taps: 4 },
 ];
 
 const hex = (h: string) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
@@ -46,14 +46,13 @@ export function ShadeStudio() {
 
   return (
     <section id="shade" className="relative overflow-hidden bg-beetroot py-24 md:py-36">
-      <div className="brocade pointer-events-none absolute inset-0 opacity-[0.07]" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_30%_50%,#a1104777,transparent_70%)]" />
       <div className="grain pointer-events-none absolute inset-0" />
 
       <div className="relative mx-auto grid max-w-[1400px] items-center gap-14 px-5 md:px-10 lg:grid-cols-[1.1fr_1fr] lg:gap-20">
         <Reveal className="relative">
           <div className="grid grid-cols-2 gap-4 md:gap-6">
-            <div className="relative aspect-[3/4] overflow-hidden rounded-t-full border border-gold/40 p-1.5">
+            <div className="relative aspect-[3/4] overflow-hidden rounded-t-full border border-pearl/20 p-1.5">
               <motion.div
                 className="relative h-full w-full overflow-hidden rounded-t-full"
                 animate={{ backgroundColor: skin.hex }}
@@ -78,7 +77,7 @@ export function ShadeStudio() {
                 <p className="eyebrow absolute inset-x-0 bottom-5 text-center text-[0.55rem] text-black/45">On lips</p>
               </motion.div>
             </div>
-            <div className="relative mt-12 aspect-[3/4] overflow-hidden rounded-t-full border border-gold/40 p-1.5">
+            <div className="relative mt-12 aspect-[3/4] overflow-hidden rounded-t-full border border-pearl/20 p-1.5">
               <motion.div
                 className="relative h-full w-full overflow-hidden rounded-t-full"
                 animate={{ backgroundColor: skin.hex }}
@@ -105,7 +104,7 @@ export function ShadeStudio() {
                 onClick={() => setSkin(s)}
                 className={cn(
                   "size-8 rounded-full border-2 transition-transform hover:scale-110",
-                  skin.name === s.name ? "scale-110 border-gold-light" : "border-transparent"
+                  skin.name === s.name ? "scale-110 border-pearl" : "border-transparent"
                 )}
                 style={{ background: s.hex }}
               />
@@ -115,17 +114,17 @@ export function ShadeStudio() {
         </Reveal>
 
         <Reveal delay={0.1}>
-          <p className="eyebrow text-gold-light/80">Shade Studio · {product.name}</p>
+          <p className="eyebrow text-pearl/70">Try it on · {product.name}</p>
           <h2 className="mt-5 font-display text-[clamp(2.4rem,5vw,4.6rem)] leading-[0.95] text-pearl">
-            From a whisper
+            From barely there
             <br />
-            <span className="gold-text italic">to a banquet.</span>
+            <span className="gold-text italic">to full statement.</span>
           </h2>
           <p className="mt-5 max-w-md text-pearl/70">
-            One beetroot stain, built your way. Drag to layer it—every tap a little more ceremony.
+            One beetroot stain for lips and cheeks, built your way. Drag the slider and pick your skin tone to preview it.
           </p>
 
-          <div className="mt-10 rounded-2xl border border-gold/25 bg-night/30 p-6 backdrop-blur-sm md:p-8">
+          <div className="mt-10 rounded-2xl border border-pearl/15 bg-night/30 p-6 backdrop-blur-sm md:p-8">
             <div className="flex items-end justify-between gap-4">
               <div className="min-h-[5.5rem]">
                 <AnimatePresence mode="wait">
@@ -135,7 +134,7 @@ export function ShadeStudio() {
                     animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                     exit={{ opacity: 0, y: -12, filter: "blur(4px)" }}
                     transition={{ duration: 0.3 }}
-                    className="font-display text-4xl italic text-pearl md:text-5xl"
+                    className="font-display text-4xl text-pearl md:text-5xl"
                   >
                     {level.name}
                   </motion.p>
@@ -143,7 +142,7 @@ export function ShadeStudio() {
                 <p className="mt-2 text-sm text-pearl/60">{level.note}</p>
               </div>
               <motion.span
-                className="size-14 shrink-0 rounded-full border-2 border-gold-light/70 shadow-[0_0_30px_rgba(0,0,0,0.4)]"
+                className="size-14 shrink-0 rounded-full border-2 border-pearl/60 shadow-[0_0_30px_rgba(0,0,0,0.4)]"
                 animate={{ backgroundColor: pigment }}
               />
             </div>
@@ -170,8 +169,8 @@ export function ShadeStudio() {
                     type="button"
                     onClick={() => setValue(i * 33 + 8)}
                     className={cn(
-                      "font-caps text-[0.55rem] uppercase tracking-[0.2em] transition-colors",
-                      level.name === l.name ? "text-gold-light" : "text-pearl/40 hover:text-pearl/70"
+                      "text-xs font-medium transition-colors",
+                      level.name === l.name ? "text-pearl" : "text-pearl/45 hover:text-pearl/75"
                     )}
                   >
                     {l.name}
@@ -190,7 +189,7 @@ export function ShadeStudio() {
                   setTimeout(() => setAdded(false), 1800);
                 }}
               >
-                {added ? "In your bag ✦" : `Add “${level.name}”`}
+                {added ? "Added ✓" : `Add “${level.name}”`}
               </GoldButton>
             </div>
           </div>

@@ -9,11 +9,11 @@ import { useCart } from "@/lib/cart";
 import { cn } from "@/lib/utils";
 
 const links = [
-  { href: "#vanity", label: "The Vanity" },
-  { href: "#shade", label: "Shade Studio" },
-  { href: "#consult", label: "Your Ritual" },
-  { href: "#garden", label: "The Garden" },
-  { href: "#circle", label: "Founding Circle" },
+  { href: "#vanity", label: "Shop" },
+  { href: "#shade", label: "Try a shade" },
+  { href: "#consult", label: "Skin quiz" },
+  { href: "#garden", label: "Ingredients" },
+  { href: "#circle", label: "Early access" },
 ];
 
 export function SiteNav() {
@@ -33,10 +33,10 @@ export function SiteNav() {
       <motion.header
         initial={{ y: -30, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.9, delay: 1.6, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.9, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
         className={cn(
           "fixed inset-x-0 top-0 z-50 transition-all duration-500",
-          scrolled ? "border-b border-gold/15 bg-night/75 backdrop-blur-xl" : "bg-transparent"
+          scrolled ? "border-b border-pearl/10 bg-night/75 backdrop-blur-xl" : "bg-transparent"
         )}
       >
         <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-5 md:h-20 md:px-10">
@@ -45,7 +45,7 @@ export function SiteNav() {
               <a
                 key={link.href}
                 href={link.href}
-                className="eyebrow text-pearl/70 transition-colors hover:text-gold-light"
+                className="text-sm text-pearl/75 transition-colors hover:text-pearl"
               >
                 {link.label}
               </a>
@@ -66,7 +66,7 @@ export function SiteNav() {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="eyebrow text-pearl/70 transition-colors hover:text-gold-light"
+                  className="text-sm text-pearl/75 transition-colors hover:text-pearl"
                 >
                   {link.label}
                 </a>
@@ -80,10 +80,10 @@ export function SiteNav() {
               onClick={() => setBagOpen(true)}
               animate={bump ? { scale: [1, 1.35, 0.9, 1], rotate: [0, -8, 6, 0] } : undefined}
               transition={{ duration: 0.55 }}
-              className="relative flex items-center gap-2 rounded-full border border-gold/40 px-3.5 py-2 text-pearl transition-colors hover:border-gold-light hover:text-gold-light"
+              className="relative flex items-center gap-2 rounded-full border border-pearl/30 px-3.5 py-2 text-pearl transition-colors hover:border-pearl"
             >
               <ShoppingBag className="size-4" strokeWidth={1.25} />
-              <span className="font-caps text-xs tabular-nums">{count}</span>
+              <span className="text-xs font-medium tabular-nums">{count}</span>
               {count > 0 && (
                 <span className="absolute -right-0.5 -top-0.5 size-2 rounded-full bg-magenta shadow-[0_0_10px_#c41d5c]" />
               )}
@@ -109,7 +109,6 @@ export function SiteNav() {
             transition={{ duration: 0.6, ease: [0.65, 0, 0.35, 1] }}
             className="fixed inset-0 z-40 bg-midnight lg:hidden"
           >
-            <div className="jali absolute inset-0 opacity-[0.06]" />
             <div className="relative flex h-full flex-col items-center justify-center gap-7 pt-16">
               <LotusMark draw className="h-20 w-16 text-gold" />
               {links.map((link, i) => (
@@ -120,7 +119,7 @@ export function SiteNav() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 + 0.06 * i }}
                   onClick={() => setOpen(false)}
-                  className="font-display text-3xl italic text-pearl"
+                  className="font-display text-4xl text-pearl"
                 >
                   {link.label}
                 </motion.a>

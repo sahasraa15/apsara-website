@@ -20,18 +20,17 @@ Open [http://127.0.0.1:4321](http://127.0.0.1:4321).
 
 ## What’s on the page
 
-- Intro: lotus mark draws itself, then jali palace doors open
-- Hero: product shelf inside the logo arch, cursor lamplight through jali, gold dust; scrolling walks you through the arch
-- The Vanity: pinned horizontal scroll, one colour-shifting "room" per product with tilt-to-cursor vessels, stock scarcity and add-to-bag
-- Shade Studio: drag the beetroot tint from Whisper to Banquet and preview it on six skin tones
-- Ritual consult: three questions → a personalised three-product ritual bundle at 15% off, added in one click
-- The Garden: ingredient seals with origin stories, linked to the products that contain them
+- Hero: product shelf inside a rounded arch with a soft cursor glow; scrolling walks you through the arch
+- Collection: pinned horizontal scroll, one color-shifting panel per product with tilt-to-cursor vessels, stock bar and add-to-bag
+- Try a shade: drag the beetroot tint from Sheer to Statement and preview it on six skin tones
+- Skin quiz: three questions → a personalized three-product routine at 15% off, added in one click
+- Ingredients: ingredient orbs with origin stories, linked to the products that contain them
 - Story: parallax collage cut from the moodboard
-- Founding Circle: live seat counter, perks, and a numbered member card on sign-up
+- Early access: live spot counter, perks, and a numbered confirmation card on sign-up
 - Bag drawer with free-gift progress bar and pre-launch "reserve" checkout (client-side demo, persisted in localStorage)
 
 Product vessels are drawn in SVG (`src/components/brand/Vessel.tsx`); imagery in `public/images/mood/` is cropped from the moodboard.
 
 ## Brand notes
 
-Palette and motifs (lotus arch, jali overlay, silk/stone atmosphere) are drawn from the project moodboard in `assets/` and `public/images/moodboard.jpg`.
+Palette (forest green, magenta, gold accents) and the lotus mark are drawn from the project moodboard in `assets/` and `public/images/moodboard.jpg`.

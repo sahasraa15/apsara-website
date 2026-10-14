@@ -22,16 +22,16 @@ const questions: { prompt: string; options: { label: string; dosha: Dosha }[] }[
     prompt: "Your ideal Sunday is…",
     options: [
       { label: "Oil massage, soft music, a long nap", dosha: "vata" },
-      { label: "A cool swim and a mango lassi", dosha: "pitta" },
-      { label: "A brisk walk in the monsoon rain", dosha: "kapha" },
+      { label: "A cool swim and an iced matcha", dosha: "pitta" },
+      { label: "A brisk walk in the rain", dosha: "kapha" },
     ],
   },
   {
-    prompt: "At a wedding, you're the one…",
+    prompt: "At a party, you're the one…",
     options: [
-      { label: "Glowing quietly by the diyas", dosha: "vata" },
+      { label: "Deep in conversation by the candles", dosha: "vata" },
       { label: "Running the dance floor", dosha: "pitta" },
-      { label: "With the boldest kohl in the room", dosha: "kapha" },
+      { label: "With the boldest eyeliner in the room", dosha: "kapha" },
     ],
   },
 ];
@@ -72,17 +72,19 @@ export function Consult() {
 
   return (
     <section id="consult" className="relative overflow-hidden bg-forest-deep py-24 md:py-36">
-      <div className="jali pointer-events-none absolute inset-0 opacity-[0.05]" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_50%_50%_at_80%_20%,#0c502999,transparent_70%)]" />
 
       <div className="relative mx-auto max-w-[1200px] px-5 md:px-10">
         <Reveal className="text-center">
-          <p className="eyebrow text-gold-light/80">A consultation, not a quiz</p>
+          <p className="eyebrow text-pearl/70">60-second skin quiz</p>
           <h2 className="mx-auto mt-5 max-w-3xl font-display text-[clamp(2.4rem,5.5vw,5rem)] leading-[0.95] text-pearl">
             Three questions.
             <br />
-            <span className="gold-text italic">One ritual, made for you.</span>
+            <span className="gold-text italic">One routine, made for you.</span>
           </h2>
+          <p className="mx-auto mt-5 max-w-lg text-pearl/65">
+            Ayurveda sorts skin into three types—air, fire and earth. Find yours and we&apos;ll build your routine.
+          </p>
         </Reveal>
 
         <div className="mt-10 flex justify-center gap-2">
@@ -90,7 +92,7 @@ export function Consult() {
             <motion.span
               key={i}
               className="h-1 w-14 rounded-full"
-              animate={{ backgroundColor: i < votes.length ? "#e3c27c" : "rgba(241,232,214,0.15)" }}
+              animate={{ backgroundColor: i < votes.length ? "#f1e8d6" : "rgba(241,232,214,0.15)" }}
             />
           ))}
         </div>
@@ -105,7 +107,7 @@ export function Consult() {
                 exit={{ opacity: 0, y: -30 }}
                 transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               >
-                <p className="text-center font-display text-3xl italic text-pearl md:text-4xl">
+                <p className="text-center font-display text-3xl text-pearl md:text-4xl">
                   {questions[step].prompt}
                 </p>
                 <div className="mt-10 grid gap-4 md:grid-cols-3">
@@ -119,13 +121,13 @@ export function Consult() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.08 * i }}
                       whileHover={{ y: -8 }}
-                      className="group relative flex flex-col items-center overflow-hidden rounded-t-[999px] border border-gold/30 bg-midnight/60 px-6 pb-10 pt-16 text-center transition-colors hover:border-gold-light"
+                      className="group relative flex flex-col items-center overflow-hidden rounded-3xl border border-pearl/15 bg-midnight/60 px-6 pb-10 pt-12 text-center transition-colors hover:border-pearl/50"
                     >
-                      <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,#e3c27c22,transparent_60%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                      <svg viewBox="0 0 32 32" className="size-12 text-gold-light transition-transform duration-500 group-hover:scale-110">
+                      <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,#f1e8d615,transparent_60%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                      <svg viewBox="0 0 32 32" className="size-12 text-pearl/80 transition-transform duration-500 group-hover:scale-110">
                         <path d={glyphs[opt.dosha]} fill="none" stroke="currentColor" strokeWidth={1.2} strokeLinecap="round" />
                       </svg>
-                      <span className="mt-6 font-display text-2xl leading-snug text-pearl">{opt.label}</span>
+                      <span className="mt-6 text-lg leading-snug text-pearl">{opt.label}</span>
                     </motion.button>
                   ))}
                 </div>
@@ -136,10 +138,10 @@ export function Consult() {
                 initial={{ opacity: 0, scale: 0.97 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                className="grid items-center gap-10 rounded-3xl border border-gold/30 bg-midnight/70 p-6 md:grid-cols-[1.1fr_1fr] md:p-12"
+                className="grid items-center gap-10 rounded-3xl border border-pearl/15 bg-midnight/70 p-6 md:grid-cols-[1.1fr_1fr] md:p-12"
               >
                 <div className="relative flex h-72 items-end justify-center gap-2 md:h-96">
-                  <div className="absolute inset-x-6 bottom-0 h-px bg-gradient-to-r from-transparent via-gold-light to-transparent" />
+                  <div className="absolute inset-x-6 bottom-0 h-px bg-gradient-to-r from-transparent via-pearl/40 to-transparent" />
                   <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_80%,#a1104740,transparent_65%)]" />
                   {items.map((p, i) => (
                     <motion.div
@@ -155,16 +157,16 @@ export function Consult() {
                   ))}
                 </div>
                 <div>
-                  <p className="eyebrow text-gold-light/80">
-                    You lean {winner} · {ritual.element}
+                  <p className="eyebrow text-pearl/70">
+                    Your type: {winner} · {ritual.element}
                   </p>
-                  <h3 className="mt-4 font-display text-4xl italic text-pearl md:text-5xl">{ritual.title}</h3>
+                  <h3 className="mt-4 font-display text-4xl text-pearl md:text-5xl">{ritual.title}</h3>
                   <p className="mt-4 text-pearl/70">{ritual.copy}</p>
-                  <ul className="mt-6 space-y-2 border-y border-gold/20 py-4">
+                  <ul className="mt-6 space-y-2 border-y border-pearl/15 py-4">
                     {items.map((p, i) => (
                       <li key={p.id} className="flex justify-between text-sm">
                         <span className="text-pearl/85">
-                          <span className="mr-2 font-display italic text-gold-light">{["AM", "PM", "Weekly"][i]}</span>
+                          <span className="mr-2 inline-block w-14 text-xs font-medium uppercase tracking-wider text-pearl/50">{["AM", "PM", "Weekly"][i]}</span>
                           {p.name}
                         </span>
                         <span className="text-pearl/50">{formatPrice(p.price)}</span>
@@ -196,12 +198,12 @@ export function Consult() {
                         setAdded(true);
                       }}
                     >
-                      {added ? "Ritual in your bag ✦" : "Add the whole ritual"}
+                      {added ? "Added ✓" : "Add the full routine"}
                     </GoldButton>
                     <button
                       type="button"
                       onClick={reset}
-                      className="eyebrow inline-flex items-center gap-2 text-pearl/60 hover:text-gold-light"
+                      className="inline-flex items-center gap-2 text-sm text-pearl/60 hover:text-pearl"
                     >
                       <RotateCcw className="size-3" /> Retake
                     </button>

@@ -32,9 +32,9 @@ function SpinningSeal({ color }: { color: string }) {
       <defs>
         <path id={id} d="M100 100 m-86 0 a86 86 0 1 1 172 0 a86 86 0 1 1 -172 0" />
       </defs>
-      <text fill={color} fontSize="7.2" style={{ fontFamily: "var(--font-caps), serif", letterSpacing: "0.42em" }}>
+      <text fill={color} fontSize="7.2" style={{ fontFamily: "var(--font-body), sans-serif", fontWeight: 500, letterSpacing: "0.3em" }}>
         <textPath href={`#${id}`}>
-          APSARA &amp; CO · SMALL BATCH · HAND-NUMBERED · FIRST EDITION ·
+          CLEAN · VEGAN · CRUELTY-FREE · DERM TESTED · SMALL BATCH ·
         </textPath>
       </text>
     </motion.svg>
@@ -110,8 +110,8 @@ function Room({ product, index }: { product: Product; index: number }) {
             className="absolute inset-[8%] rounded-full blur-3xl"
             style={{ background: `radial-gradient(circle, ${product.fill}55, transparent 70%)` }}
           />
-          <SpinningSeal color="#e3c27c99" />
-          <div className="absolute inset-[13%] rounded-full border border-gold/25" />
+          <SpinningSeal color="#f1e8d680" />
+          <div className="absolute inset-[13%] rounded-full border border-pearl/15" />
           <Petals color={product.fill} />
           <motion.div
             className="absolute inset-[16%] flex items-end justify-center"
@@ -131,28 +131,27 @@ function Room({ product, index }: { product: Product; index: number }) {
       </div>
 
       <div className="relative order-2 self-start md:order-1 md:self-center">
-        <p className="eyebrow flex items-center gap-3 text-gold-light/80">
-          <span className="font-display text-base italic tracking-normal text-gold-light">
-            №{String(index + 1).padStart(2, "0")}
-          </span>
-          <span className="h-px w-8 bg-gold/50" />
-          {product.category} · {product.dosha}
+        <p className="eyebrow flex items-center gap-3 text-pearl/70">
+          <span className="tabular-nums">{String(index + 1).padStart(2, "0")}</span>
+          <span className="h-px w-8 bg-pearl/30" />
+          {product.category}
         </p>
         <h3 className="mt-3 font-display text-[clamp(2.2rem,5.6vw,5.8rem)] leading-[0.92] tracking-[-0.015em] text-pearl md:mt-5">
           {product.name.split(" ").slice(0, -1).join(" ")}{" "}
-          <span className="gold-text italic">{product.name.split(" ").slice(-1)}</span>
+          <span className="italic">{product.name.split(" ").slice(-1)}</span>
         </h3>
         <p className="mt-3 max-w-md text-sm leading-relaxed text-pearl/75 md:mt-5 md:text-base">
           {product.blurb}
         </p>
-        <p className="mt-4 hidden max-w-md font-display text-lg italic text-gold-light/90 md:block">
-          “{product.ritual}”
+        <p className="mt-4 hidden max-w-md text-sm text-pearl/60 md:block">
+          <span className="font-medium text-pearl/85">How to use: </span>
+          {product.ritual}
         </p>
         <div className="mt-5 hidden flex-wrap gap-2 md:flex">
           {product.notes.map((n) => (
             <span
               key={n}
-              className="rounded-full border border-gold/30 bg-night/30 px-3 py-1 text-xs text-pearl/80"
+              className="rounded-full bg-pearl/10 px-3 py-1 text-xs text-pearl/80"
             >
               {n}
             </span>
@@ -164,7 +163,7 @@ function Room({ product, index }: { product: Product; index: number }) {
               <Star key={i} className="size-3.5 fill-current" strokeWidth={0} />
             ))}
           </span>
-          {product.rating} · {product.reviews.toLocaleString()} early testers
+          {product.rating} · {product.reviews.toLocaleString()} reviews
         </div>
         <div className="mt-5 flex flex-wrap items-center gap-4 md:mt-7 md:gap-6">
           <p className="font-display text-4xl text-pearl md:text-5xl">
@@ -180,19 +179,19 @@ function Room({ product, index }: { product: Product; index: number }) {
               setTimeout(() => setAdded(false), 1800);
             }}
           >
-            {added ? "In your bag ✦" : "Add to bag"}
+            {added ? "Added ✓" : "Add to bag"}
           </GoldButton>
         </div>
         <div className="mt-5 max-w-xs">
           <div className="flex justify-between text-[0.7rem] text-pearl/60">
             <span>
-              Only <span className="text-gold-light">{product.left}</span> of 1,200 left
+              Only <span className="text-pearl">{product.left}</span> left in this batch
             </span>
-            <span>{soldPct}% claimed</span>
+            <span>{soldPct}% sold</span>
           </div>
           <div className="mt-1.5 h-[3px] overflow-hidden rounded-full bg-pearl/10">
             <motion.div
-              className="h-full rounded-full bg-gradient-to-r from-gold to-magenta"
+              className="h-full rounded-full bg-pearl/80"
               initial={{ width: 0 }}
               whileInView={{ width: `${soldPct}%` }}
               transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
@@ -212,7 +211,7 @@ function ProgressRail({ progress, active }: { progress: MotionValue<number>; act
   return (
     <div className="absolute inset-x-6 bottom-6 z-10 md:inset-x-[6vw] md:bottom-8">
       <div className="relative h-px bg-pearl/15">
-        <motion.div className="absolute inset-y-0 left-0 bg-gold-light" style={{ width }} />
+        <motion.div className="absolute inset-y-0 left-0 bg-pearl" style={{ width }} />
       </div>
       <div className="mt-3 flex justify-between">
         {products.map((p, i) => (
@@ -221,8 +220,8 @@ function ProgressRail({ progress, active }: { progress: MotionValue<number>; act
             type="button"
             onClick={() => jump(i)}
             className={cn(
-              "font-caps text-[0.55rem] uppercase tracking-[0.2em] transition-colors md:text-[0.62rem]",
-              active === i + 1 ? "text-gold-light" : "text-pearl/40 hover:text-pearl/80"
+              "text-[0.65rem] font-medium transition-colors md:text-xs",
+              active === i + 1 ? "text-pearl" : "text-pearl/40 hover:text-pearl/80"
             )}
           >
             <span className="md:hidden">{String(i + 1).padStart(2, "0")}</span>
@@ -263,27 +262,26 @@ export function Vanity() {
       ))}
 
       <motion.div className="sticky top-0 h-[100svh] overflow-hidden" style={{ backgroundColor: bg }}>
-        <div className="jali pointer-events-none absolute inset-0 opacity-[0.05]" />
         <div className="grain pointer-events-none absolute inset-0" />
 
         <motion.div className="relative flex h-full" style={{ x }}>
           <div className="relative flex h-full w-screen shrink-0 flex-col items-center justify-center px-6 text-center">
-            <p className="eyebrow text-gold-light/80">The Vanity</p>
+            <p className="eyebrow text-pearl/70">The collection</p>
             <h2 className="mt-6 max-w-5xl font-display text-[clamp(2.8rem,8vw,8rem)] leading-[0.9] text-pearl">
-              Six vessels.
+              Six essentials.
               <br />
-              <span className="gold-text italic">One quiet ceremony.</span>
+              <span className="gold-text italic">Zero fluff.</span>
             </h2>
             <p className="mt-8 max-w-md text-pearl/65">
-              Hand-numbered, small batch, 1,200 of each. Keep scrolling and step into each room.
+              Clean formulas, real botanicals, made in small batches. Keep scrolling to meet each one.
             </p>
             <motion.div
-              className="mt-12 flex items-center gap-3 text-gold-light"
+              className="mt-12 flex items-center gap-3 text-pearl/80"
               animate={{ x: [0, 14, 0] }}
               transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
             >
               <span className="eyebrow">Scroll</span>
-              <span className="h-px w-16 bg-gold-light" />
+              <span className="h-px w-16 bg-pearl/60" />
               <span>→</span>
             </motion.div>
           </div>

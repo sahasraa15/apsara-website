@@ -1,4 +1,3 @@
-import { IntroLoader } from "@/components/brand/IntroLoader";
 import { SiteNav } from "@/components/brand/SiteNav";
 import { Cursor } from "@/components/brand/Cursor";
 import { CartDrawer } from "@/components/brand/CartDrawer";
@@ -15,7 +14,6 @@ import { SiteFooter } from "@/components/sections/SiteFooter";
 export default function Home() {
   return (
     <>
-      <IntroLoader />
       <SiteNav />
       <CartDrawer />
       <Cursor />

@@ -11,11 +11,9 @@ import {
 } from "framer-motion";
 import { products } from "@/lib/products";
 import { Vessel } from "@/components/brand/Vessel";
-import { GoldDust } from "@/components/brand/GoldDust";
 import { GoldButton } from "@/components/brand/GoldButton";
 
-const ARCH =
-  "M0 1 V0.446 C0 0.268 0.3 0.16 0.425 0.089 C0.4625 0.068 0.4875 0.039 0.5 0 C0.5125 0.039 0.5375 0.068 0.575 0.089 C0.7 0.16 1 0.268 1 0.446 V1 Z";
+const ARCH = "M0 1 V0.357 A0.5 0.357 0 0 1 1 0.357 V1 Z";
 
 const shelf = [
   { id: "kajal-liner", h: "70%" },
@@ -43,7 +41,6 @@ export function Hero() {
   const smy = useSpring(my, { stiffness: 60, damping: 18 });
   const lampX = useTransform(smx, (v) => `${v * 100}%`);
   const lampY = useTransform(smy, (v) => `${v * 100}%`);
-  const mask = useMotionTemplate`radial-gradient(260px circle at ${lampX} ${lampY}, black, transparent 75%)`;
   const glow = useMotionTemplate`radial-gradient(600px circle at ${lampX} ${lampY}, rgba(227,194,124,0.13), transparent 60%)`;
   const tiltX = useTransform(smy, [0, 1], [6, -6]);
   const tiltY = useTransform(smx, [0, 1], [-8, 8]);
@@ -63,13 +60,8 @@ export function Hero() {
       >
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_45%,#0c5029_0%,#0a1c10_55%,#050e08_100%)]" />
         <div className="absolute inset-x-0 bottom-0 h-1/2 bg-[radial-gradient(ellipse_60%_80%_at_50%_100%,#a1104733,transparent_70%)]" />
-        <div className="jali absolute inset-0 opacity-[0.05]" />
-        <motion.div
-          className="jali absolute inset-0 opacity-60"
-          style={{ maskImage: mask, WebkitMaskImage: mask }}
-        />
         <motion.div className="absolute inset-0" style={{ background: glow }} />
-        <GoldDust className="absolute inset-0 h-full w-full" />
+        <div className="grain pointer-events-none absolute inset-0" />
 
         <svg width="0" height="0" className="absolute">
           <clipPath id="hero-arch" clipPathUnits="objectBoundingBox">
@@ -82,19 +74,12 @@ export function Hero() {
           style={{ scale: archScale, y: archY, aspectRatio: "400 / 560", rotateX: tiltX, rotateY: tiltY }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1.4, delay: 2.2, ease }}
+          transition={{ duration: 1.2, delay: 0.1, ease }}
         >
           <div
             className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_85%,#a1104766,transparent_65%),linear-gradient(180deg,#0b3019,#0a1c10_70%)]"
             style={{ clipPath: "url(#hero-arch)" }}
           >
-            <div className="brocade absolute inset-0 opacity-[0.07]" />
-            <div className="absolute left-1/2 top-[14%] h-[24%] w-px -translate-x-1/2 bg-gradient-to-b from-transparent to-gold/60" />
-            <motion.div
-              className="absolute left-1/2 top-[37%] size-3 -translate-x-1/2 rounded-full bg-gold-light shadow-[0_0_40px_14px_#e3c27c66]"
-              animate={{ opacity: [0.7, 1, 0.75, 1, 0.7] }}
-              transition={{ duration: 4, repeat: Infinity }}
-            />
             <div className="absolute inset-x-[5%] bottom-[16%] flex h-[42%] items-end justify-center gap-[1.5%]">
               {shelf.map((s, i) => {
                 const p = products.find((x) => x.id === s.id)!;
@@ -107,7 +92,7 @@ export function Hero() {
                     className="relative flex h-full items-end"
                     initial={{ y: 60, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 2.6 + i * 0.1, duration: 1, ease }}
+                    transition={{ delay: 0.4 + i * 0.08, duration: 0.9, ease }}
                     whileHover={{ y: -14, scale: 1.06 }}
                     style={{ height: s.h }}
                   >
@@ -116,7 +101,7 @@ export function Hero() {
                 );
               })}
             </div>
-            <div className="absolute inset-x-[6%] bottom-[15%] h-[3px] rounded-full bg-gradient-to-r from-transparent via-gold-light to-transparent shadow-[0_0_20px_#e3c27c]" />
+            <div className="absolute inset-x-[6%] bottom-[15%] h-px bg-pearl/30" />
             <div className="absolute inset-x-0 bottom-0 h-[15%] bg-gradient-to-b from-forest-deep/80 to-night" />
           </div>
           <svg
@@ -124,18 +109,8 @@ export function Hero() {
             preserveAspectRatio="none"
             className="pointer-events-none absolute inset-0 h-full w-full overflow-visible"
           >
-            <path d={ARCH} fill="none" stroke="#e3c27c" strokeWidth={1.5} vectorEffect="non-scaling-stroke" />
-            <path
-              d={ARCH}
-              fill="none"
-              stroke="#b8893a"
-              strokeOpacity={0.5}
-              strokeWidth={1}
-              vectorEffect="non-scaling-stroke"
-              transform="translate(-0.04 -0.03) scale(1.08 1.03)"
-            />
+            <path d={ARCH} fill="none" stroke="#f1e8d6" strokeOpacity={0.3} strokeWidth={1} vectorEffect="non-scaling-stroke" />
           </svg>
-          <div className="absolute -top-[5%] left-1/2 size-2.5 -translate-x-1/2 rotate-45 bg-gold-light shadow-[0_0_14px_#e3c27c]" />
         </motion.div>
 
         <motion.div
@@ -143,12 +118,12 @@ export function Hero() {
           style={{ opacity: textOpacity }}
         >
           <motion.p
-            className="eyebrow text-[0.55rem]! text-gold-light/80 sm:text-[0.68rem]!"
+            className="eyebrow text-[0.6rem]! text-pearl/75 sm:text-[0.72rem]!"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 2.4, duration: 1 }}
+            transition={{ delay: 0.2, duration: 1 }}
           >
-            Ayurvedic skincare &amp; colour · First edition
+            Clean Ayurvedic skincare &amp; color
           </motion.p>
         </motion.div>
 
@@ -159,17 +134,17 @@ export function Hero() {
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2.5, duration: 1.2, ease }}
+            transition={{ delay: 0.25, duration: 1.1, ease }}
             className="flex w-full flex-col items-center text-center font-display text-[clamp(2.6rem,11vw,4.5rem)] leading-[0.9] tracking-[-0.02em] text-pearl [text-shadow:0_10px_60px_#050e08] lg:grid lg:grid-cols-[1fr_min(52svh,500px)_1fr] lg:items-center lg:text-[clamp(4rem,6.4vw,7.5rem)]"
           >
             <span className="lg:pr-4 lg:text-right">
-              Your nani&apos;s
-              <br className="hidden lg:block" /> secrets,
+              Grandma
+              <br className="hidden lg:block" /> was right.
             </span>
             <span aria-hidden className="hidden lg:block" />
             <span className="gold-text italic lg:pl-4 lg:text-left">
-              bottled
-              <br className="hidden lg:block" /> in gold.
+              Science
+              <br className="hidden lg:block" /> caught up.
             </span>
           </motion.h1>
         </motion.div>
@@ -179,11 +154,11 @@ export function Hero() {
             className="flex flex-wrap items-center justify-center gap-3"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2.9, duration: 1, ease }}
+            transition={{ delay: 0.5, duration: 1, ease }}
           >
-            <GoldButton href="#vanity">Enter the vanity</GoldButton>
+            <GoldButton href="#vanity">Shop the collection</GoldButton>
             <GoldButton href="#consult" variant="outline">
-              Find my ritual
+              Take the skin quiz
             </GoldButton>
           </motion.div>
         </motion.div>

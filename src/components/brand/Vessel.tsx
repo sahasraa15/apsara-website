@@ -53,7 +53,7 @@ function Label({
         y={small ? y + h * 0.48 : y + h * 0.62}
         textAnchor="middle"
         fill={`url(#${ids.gold})`}
-        style={{ fontFamily: "var(--font-caps), serif", letterSpacing: "0.28em" }}
+        style={{ fontFamily: "var(--font-body), sans-serif", letterSpacing: "0.28em" }}
         fontSize={small ? 7 : 10}
       >
         APSARA
@@ -211,7 +211,7 @@ export function Vessel({ product, className, fillOverride }: VesselProps) {
             transform="rotate(-90 100 190)"
             textAnchor="middle"
             fill={`url(#${ids.gold})`}
-            style={{ fontFamily: "var(--font-caps), serif", letterSpacing: "0.3em" }}
+            style={{ fontFamily: "var(--font-body), sans-serif", letterSpacing: "0.3em" }}
             fontSize={10}
           >
             APSARA · KOHL
@@ -245,7 +245,7 @@ export function Vessel({ product, className, fillOverride }: VesselProps) {
             y={280}
             textAnchor="middle"
             fill={`url(#${ids.gold})`}
-            style={{ fontFamily: "var(--font-caps), serif", letterSpacing: "0.3em" }}
+            style={{ fontFamily: "var(--font-body), sans-serif", letterSpacing: "0.3em" }}
             fontSize={10}
           >
             APSARA
