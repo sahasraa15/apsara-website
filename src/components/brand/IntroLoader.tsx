@@ -5,47 +5,62 @@ import { AnimatePresence, motion } from "framer-motion";
 import { LotusMark } from "./LotusMark";
 import { Wordmark } from "./Wordmark";
 
+const ease = [0.76, 0, 0.24, 1] as const;
+
 export function IntroLoader() {
-  const [show, setShow] = useState(true);
+  const [phase, setPhase] = useState<"draw" | "open" | "done">("draw");
 
   useEffect(() => {
-    const t = setTimeout(() => setShow(false), 2200);
-    return () => clearTimeout(t);
+    history.scrollRestoration = "manual";
+    window.scrollTo(0, 0);
+    const a = setTimeout(() => setPhase("open"), 1700);
+    const b = setTimeout(() => setPhase("done"), 2900);
+    return () => {
+      clearTimeout(a);
+      clearTimeout(b);
+    };
   }, []);
 
+  if (phase === "done") return null;
+
   return (
-    <AnimatePresence>
-      {show && (
+    <div
+      className="fixed inset-0 z-[100] cursor-pointer"
+      onClick={() => setPhase("done")}
+      aria-hidden
+    >
+      {(["left", "right"] as const).map((side) => (
         <motion.div
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-midnight"
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          key={side}
+          className={`absolute inset-y-0 w-1/2 overflow-hidden bg-midnight ${
+            side === "left" ? "left-0 border-r" : "right-0 border-l"
+          } border-gold/30`}
+          animate={phase === "open" ? { x: side === "left" ? "-100%" : "100%" } : { x: 0 }}
+          transition={{ duration: 1.1, ease }}
         >
-          <motion.div
-            initial={{ scale: 0.7, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className="text-gold"
-          >
-            <LotusMark className="mx-auto h-24 w-20" />
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.45, duration: 0.7 }}
-            className="mt-6 text-gold"
-          >
-            <Wordmark size="lg" showCo />
-          </motion.div>
-          <motion.div
-            className="mt-10 h-px w-24 origin-center bg-gold/60"
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ delay: 0.7, duration: 0.8 }}
-          />
+          <div className="jali absolute inset-0 opacity-[0.07]" />
         </motion.div>
-      )}
-    </AnimatePresence>
+      ))}
+
+      <AnimatePresence>
+        {phase === "draw" && (
+          <motion.div
+            className="absolute inset-0 flex flex-col items-center justify-center"
+            exit={{ opacity: 0, scale: 1.15, filter: "blur(6px)" }}
+            transition={{ duration: 0.5 }}
+          >
+            <LotusMark draw className="h-32 w-28 text-gold" />
+            <motion.div
+              initial={{ opacity: 0, letterSpacing: "0.6em" }}
+              animate={{ opacity: 1, letterSpacing: "0.22em" }}
+              transition={{ delay: 0.6, duration: 1 }}
+              className="mt-6 text-gold-light"
+            >
+              <Wordmark size="lg" showCo className="items-center" />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }

@@ -1,14 +1,15 @@
 import { IntroLoader } from "@/components/brand/IntroLoader";
 import { SiteNav } from "@/components/brand/SiteNav";
+import { Cursor } from "@/components/brand/Cursor";
+import { CartDrawer } from "@/components/brand/CartDrawer";
 import { Hero } from "@/components/sections/Hero";
+import { Vanity } from "@/components/sections/Vanity";
 import { Marquee } from "@/components/sections/Marquee";
-import { Collection } from "@/components/sections/Collection";
-import { Ritual } from "@/components/sections/Ritual";
-import { DoshaQuiz } from "@/components/sections/DoshaQuiz";
-import { Ingredients } from "@/components/sections/Ingredients";
+import { ShadeStudio } from "@/components/sections/ShadeStudio";
+import { Consult } from "@/components/sections/Consult";
+import { Garden } from "@/components/sections/Garden";
 import { Story } from "@/components/sections/Story";
-import { Lookbook } from "@/components/sections/Lookbook";
-import { Waitlist } from "@/components/sections/Waitlist";
+import { FoundingCircle } from "@/components/sections/FoundingCircle";
 import { SiteFooter } from "@/components/sections/SiteFooter";
 
 export default function Home() {
@@ -16,16 +17,17 @@ export default function Home() {
     <>
       <IntroLoader />
       <SiteNav />
+      <CartDrawer />
+      <Cursor />
       <main className="flex-1">
         <Hero />
+        <Vanity />
         <Marquee />
-        <Collection />
-        <Ritual />
-        <DoshaQuiz />
-        <Ingredients />
+        <ShadeStudio />
+        <Consult />
+        <Garden />
         <Story />
-        <Lookbook />
-        <Waitlist />
+        <FoundingCircle />
       </main>
       <SiteFooter />
     </>

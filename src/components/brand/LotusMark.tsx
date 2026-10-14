@@ -1,63 +1,77 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 type LotusMarkProps = {
   className?: string;
-  gold?: boolean;
+  /** Draw the linework in on mount */
+  draw?: boolean;
+  delay?: number;
+  jewel?: boolean;
 };
 
-export function LotusMark({ className, gold = true }: LotusMarkProps) {
-  const stroke = gold ? "currentColor" : "currentColor";
+const lines = [
+  // Onion-dome arch, open at the base like the moodboard logo
+  "M30 104 C12 96 5 76 8 58 C11 40 28 30 40 24 C46 21 50 16 50 10 C50 16 54 21 60 24 C72 30 89 40 92 58 C95 76 88 96 70 104",
+  // Centre petal
+  "M50 88 C40 78 40 60 50 46 C60 60 60 78 50 88 Z",
+  // Inner side petals
+  "M48 88 C36 86 28 76 27 62 C37 64 45 72 49 84",
+  "M52 88 C64 86 72 76 73 62 C63 64 55 72 51 84",
+  // Outer petals
+  "M44 90 C30 92 20 86 15 76 C25 74 35 78 42 86",
+  "M56 90 C70 92 80 86 85 76 C75 74 65 78 58 86",
+  // Water line
+  "M28 96 H72",
+  "M36 100 H64",
+];
 
+export function LotusMark({ className, draw = false, delay = 0, jewel = true }: LotusMarkProps) {
   return (
     <svg
-      viewBox="0 0 80 96"
+      viewBox="0 0 100 112"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={cn("text-gold", className)}
       aria-hidden
     >
-      {/* Scalloped arch frame */}
-      <path
-        d="M8 92 V38 C8 18 22 6 40 6 C58 6 72 18 72 38 V92"
-        stroke={stroke}
-        strokeWidth="1.4"
-        strokeLinecap="round"
-      />
-      <path
-        d="M14 92 V40 C14 24 25 12 40 12 C55 12 66 24 66 40 V92"
-        stroke={stroke}
-        strokeWidth="0.8"
-        opacity="0.55"
-      />
-      {/* Lotus petals */}
-      <path
-        d="M40 72 C36 58 28 50 22 48 C28 46 34 42 40 34 C46 42 52 46 58 48 C52 50 44 58 40 72 Z"
-        stroke={stroke}
-        strokeWidth="1.2"
-        fill="none"
-      />
-      <path
-        d="M40 68 C38 58 34 52 30 50 C34 49 37 46 40 40 C43 46 46 49 50 50 C46 52 42 58 40 68 Z"
-        stroke={stroke}
-        strokeWidth="0.9"
-        opacity="0.7"
-        fill="none"
-      />
-      <path
-        d="M26 54 C22 52 18 54 16 58 C20 56 24 58 28 62"
-        stroke={stroke}
-        strokeWidth="0.9"
-        opacity="0.65"
-      />
-      <path
-        d="M54 54 C58 52 62 54 64 58 C60 56 56 58 52 62"
-        stroke={stroke}
-        strokeWidth="0.9"
-        opacity="0.65"
-      />
-      {/* Center jewel */}
-      <circle cx="40" cy="48" r="1.6" fill={stroke} />
-      <circle cx="40" cy="30" r="0.9" fill={stroke} opacity="0.5" />
+      {lines.map((d, i) =>
+        draw ? (
+          <motion.path
+            key={d}
+            d={d}
+            stroke="currentColor"
+            strokeWidth={i === 0 ? 1.6 : 1.2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={{ pathLength: 1, opacity: 1 }}
+            transition={{ duration: 1.4, delay: delay + i * 0.12, ease: [0.65, 0, 0.35, 1] }}
+          />
+        ) : (
+          <path
+            key={d}
+            d={d}
+            stroke="currentColor"
+            strokeWidth={i === 0 ? 1.6 : 1.2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        )
+      )}
+      {/* Finial */}
+      <path d="M50 1 L52 4.5 L50 8 L48 4.5 Z" fill="currentColor" />
+      {jewel && (
+        <motion.path
+          d="M50 58 C46 64 46 70 50 74 C54 70 54 64 50 58 Z"
+          fill="#c41d5c"
+          initial={draw ? { scale: 0, opacity: 0 } : false}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: delay + 1.1, duration: 0.6 }}
+          style={{ transformOrigin: "50px 66px" }}
+        />
+      )}
     </svg>
   );
 }

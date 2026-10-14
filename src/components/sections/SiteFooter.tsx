@@ -5,50 +5,44 @@ const columns = [
   {
     title: "Explore",
     links: [
-      { href: "#collection", label: "Collection" },
-      { href: "#ritual", label: "Ritual" },
-      { href: "#ingredients", label: "Botanicals" },
-      { href: "#story", label: "Story" },
+      { href: "#vanity", label: "The Vanity" },
+      { href: "#shade", label: "Shade Studio" },
+      { href: "#consult", label: "Find your ritual" },
+      { href: "#garden", label: "The Garden" },
     ],
   },
   {
-    title: "Care",
+    title: "House",
     links: [
-      { href: "#waitlist", label: "Waitlist" },
-      { href: "#top", label: "Dosha guide" },
-      { href: "#top", label: "Shipping soon" },
+      { href: "#story", label: "Our story" },
+      { href: "#circle", label: "Founding Circle" },
       { href: "#top", label: "Press" },
+      { href: "#top", label: "Stockists" },
     ],
   },
 ];
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-gold/20 bg-midnight text-sand">
-      <div className="mx-auto grid max-w-7xl gap-12 px-5 py-16 md:grid-cols-12 md:px-8">
+    <footer className="relative overflow-hidden border-t border-gold/20 bg-night text-pearl">
+      <div className="mx-auto grid max-w-[1400px] gap-12 px-5 py-16 md:grid-cols-12 md:px-10">
         <div className="md:col-span-5">
-          <div className="flex items-center gap-3 text-gold">
-            <LotusMark className="h-12 w-9" />
-            <Wordmark size="md" showCo />
+          <div className="flex items-center gap-4 text-gold">
+            <LotusMark className="h-14 w-12" />
+            <Wordmark size="md" showCo className="text-gold-light" />
           </div>
-          <p className="mt-5 max-w-sm text-sm leading-relaxed text-sand/60">
-            Indian-American Ayurvedic skincare & makeup. Heritage texture,
-            contemporary restraint.
+          <p className="mt-5 max-w-sm text-sm leading-relaxed text-pearl/55">
+            Ayurvedic skincare &amp; colour from an Indian-American house. Heirloom recipes, modern vessels.
           </p>
         </div>
 
         {columns.map((col) => (
           <div key={col.title} className="md:col-span-2">
-            <p className="text-[0.65rem] uppercase tracking-[0.28em] text-gold">
-              {col.title}
-            </p>
-            <ul className="mt-4 space-y-2">
+            <p className="eyebrow text-gold-light/80">{col.title}</p>
+            <ul className="mt-4 space-y-2.5">
               {col.links.map((link) => (
                 <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-sand/70 transition-colors hover:text-gold"
-                  >
+                  <a href={link.href} className="text-sm text-pearl/60 transition-colors hover:text-gold-light">
                     {link.label}
                   </a>
                 </li>
@@ -58,18 +52,24 @@ export function SiteFooter() {
         ))}
 
         <div className="md:col-span-3">
-          <p className="text-[0.65rem] uppercase tracking-[0.28em] text-gold">
-            Visit
-          </p>
-          <p className="mt-4 text-sm text-sand/70">
+          <p className="eyebrow text-gold-light/80">Visit</p>
+          <p className="mt-4 text-sm leading-relaxed text-pearl/60">
             Brooklyn · Hyderabad
             <br />
             hello@apsaraandco.com
           </p>
         </div>
       </div>
-      <div className="border-t border-gold/15 px-5 py-5 text-center text-[0.65rem] tracking-[0.2em] text-sand/40 uppercase md:px-8">
-        © {new Date().getFullYear()} Apsara & Co. · Prototype experience
+
+      <div
+        aria-hidden
+        className="pointer-events-none select-none text-center font-caps text-[19vw] leading-[0.8] tracking-[0.08em] text-gold/[0.07]"
+      >
+        APSARA
+      </div>
+
+      <div className="border-t border-gold/15 px-5 py-5 text-center text-[0.65rem] uppercase tracking-[0.2em] text-pearl/35 md:px-10">
+        © {new Date().getFullYear()} Apsara &amp; Co. · Prototype experience
       </div>
     </footer>
   );

@@ -37,22 +37,23 @@ export function Wordmark({
   return (
     <span
       className={cn(
-        "font-display inline-flex flex-col leading-none",
+        "font-caps inline-flex flex-col leading-none",
         sizes[size],
         className
       )}
     >
+      <span className="sr-only">Apsara{showCo ? " & Co." : ""}</span>
       <span
         className="inline-flex items-baseline uppercase"
         style={{ letterSpacing: "0.22em" }}
-        aria-label="Apsara"
+        aria-hidden
       >
         <BarlessA />
         <span>PSAR</span>
         <BarlessA />
       </span>
       {showCo && (
-        <span className="mt-2 text-[0.32em] tracking-[0.48em] opacity-80 uppercase">
+        <span aria-hidden className="mt-2 text-[0.32em] tracking-[0.48em] opacity-80 uppercase">
           &amp; Co.
         </span>
       )}

@@ -20,14 +20,17 @@ Open [http://127.0.0.1:4321](http://127.0.0.1:4321).
 
 ## What’s on the page
 
-- Lotus/arch brand mark and wordmark intro
-- Full-bleed parallax hero
-- Filterable product collection with hover sheen
-- Ritual steps on misted forest backdrop
-- Interactive dosha quiz
-- Botanical ingredient explorer (arch image frame)
-- Brand story + lookbook collage
-- Waitlist capture (client-side demo)
+- Intro: lotus mark draws itself, then jali palace doors open
+- Hero: product shelf inside the logo arch, cursor lamplight through jali, gold dust; scrolling walks you through the arch
+- The Vanity: pinned horizontal scroll, one colour-shifting "room" per product with tilt-to-cursor vessels, stock scarcity and add-to-bag
+- Shade Studio: drag the beetroot tint from Whisper to Banquet and preview it on six skin tones
+- Ritual consult: three questions → a personalised three-product ritual bundle at 15% off, added in one click
+- The Garden: ingredient seals with origin stories, linked to the products that contain them
+- Story: parallax collage cut from the moodboard
+- Founding Circle: live seat counter, perks, and a numbered member card on sign-up
+- Bag drawer with free-gift progress bar and pre-launch "reserve" checkout (client-side demo, persisted in localStorage)
+
+Product vessels are drawn in SVG (`src/components/brand/Vessel.tsx`); imagery in `public/images/mood/` is cropped from the moodboard.
 
 ## Brand notes
 

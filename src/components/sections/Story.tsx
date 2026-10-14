@@ -1,68 +1,87 @@
 "use client";
 
 import Image from "next/image";
+import { useRef } from "react";
+import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { Reveal } from "@/components/brand/Reveal";
 import { LotusMark } from "@/components/brand/LotusMark";
+import { cn } from "@/lib/utils";
+
+const tiles = [
+  { src: "/images/mood/apsara.jpg", alt: "Apsara painting with jasmine garland", className: "left-[3%] top-[6%] w-[15vw] max-w-[230px]", speed: -120, arch: true },
+  { src: "/images/mood/corridor.jpg", alt: "Palace corridor with jali light", className: "left-[19%] top-[48%] w-[11vw] max-w-[170px]", speed: 80, arch: true },
+  { src: "/images/mood/jhumka.jpg", alt: "Gold jhumka earrings on silk", className: "right-[20%] top-[4%] w-[11vw] max-w-[170px]", speed: -60, arch: false },
+  { src: "/images/mood/lotuspond.jpg", alt: "Woman among lotuses at night", className: "right-[3%] top-[30%] w-[15vw] max-w-[230px]", speed: 140, arch: true },
+  { src: "/images/mood/palace.jpg", alt: "Pink sandstone palace", className: "left-[6%] bottom-[2%] w-[10vw] max-w-[150px]", speed: -40, arch: true },
+  { src: "/images/mood/silk.jpg", alt: "Emerald silk", className: "right-[16%] bottom-[0%] w-[12vw] max-w-[190px]", speed: -150, arch: false },
+];
+
+function Tile({
+  tile,
+  progress,
+}: {
+  tile: (typeof tiles)[number];
+  progress: MotionValue<number>;
+}) {
+  const y = useTransform(progress, [0, 1], [tile.speed, -tile.speed]);
+  return (
+    <motion.div className={cn("absolute hidden md:block", tile.className)} style={{ y }}>
+      <motion.div
+        whileHover={{ scale: 1.05, rotate: -1 }}
+        transition={{ type: "spring", stiffness: 200, damping: 18 }}
+        className={cn(
+          "relative overflow-hidden border border-gold/40 p-1.5",
+          tile.arch ? "rounded-t-full" : "rounded-sm"
+        )}
+      >
+        <div className={cn("relative aspect-[3/4] overflow-hidden", tile.arch ? "rounded-t-full" : "rounded-sm")}>
+          <Image src={tile.src} alt={tile.alt} fill sizes="230px" className="object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-night/40 to-transparent" />
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
 
 export function Story() {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+
   return (
-    <section id="story" className="relative overflow-hidden py-24 md:py-32">
-      <div className="absolute right-0 top-20 hidden h-72 w-72 opacity-20 lg:block">
-        <LotusMark className="h-full w-full text-gold" />
+    <section id="story" ref={ref} className="relative overflow-hidden bg-night py-28 md:min-h-[120vh] md:py-0">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_40%_50%_at_50%_50%,#0c502955,transparent_70%)]" />
+      {tiles.map((t) => (
+        <Tile key={t.src} tile={t} progress={scrollYProgress} />
+      ))}
+
+      <div className="mx-auto mb-12 grid max-w-sm grid-cols-3 gap-3 px-5 md:hidden">
+        {tiles.slice(0, 3).map((t) => (
+          <div key={t.src} className="relative aspect-[3/4] overflow-hidden rounded-t-full border border-gold/40">
+            <Image src={t.src} alt={t.alt} fill sizes="120px" className="object-cover" />
+          </div>
+        ))}
       </div>
 
-      <div className="mx-auto max-w-7xl px-5 md:px-8">
-        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
-          <Reveal className="relative lg:col-span-5">
-            <div className="relative aspect-[3/4] overflow-hidden">
-              <Image
-                src="https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?auto=format&fit=crop&w=1000&q=80"
-                alt="Woman in soft natural light"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 40vw"
-              />
-              <div className="absolute inset-0 ring-1 ring-inset ring-gold/30" />
-            </div>
-            <div className="absolute -bottom-6 -right-4 hidden w-40 overflow-hidden border border-gold/40 md:block lg:-right-8">
-              <div className="relative aspect-square">
-                <Image
-                  src="https://images.unsplash.com/photo-1515377905703-c4788e51af44?auto=format&fit=crop&w=500&q=80"
-                  alt="Gold jewelry detail"
-                  fill
-                  className="object-cover"
-                  sizes="160px"
-                />
-              </div>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.12} className="lg:col-span-6 lg:col-start-7">
-            <p className="text-[0.65rem] uppercase tracking-[0.35em] text-magenta">
-              Our story
-            </p>
-            <h2 className="mt-4 font-display text-4xl text-midnight md:text-5xl">
-              Between two homes, one glow
-            </h2>
-            <div className="gold-rule my-8 max-w-xs" />
-            <div className="space-y-5 text-base leading-relaxed text-muted-foreground md:text-lg">
-              <p>
-                Apsara & Co. was born in the space between Indian kitchen
-                cabinets and American bathroom counters—where turmeric met SPF,
-                and kajal met a subway commute.
-              </p>
-              <p>
-                We build Ayurvedic skincare and makeup that feels expensive and
-                lived-in: deep greens, gold linework, lotus as symbol—not as
-                costume. Maximal texture. Minimal noise.
-              </p>
-              <p>
-                Launching soon. Formulated with clinical partners. Rooted in
-                ritual you can actually keep.
-              </p>
-            </div>
-          </Reveal>
-        </div>
+      <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center px-6 text-center md:min-h-[120vh] md:justify-center">
+        <Reveal>
+          <LotusMark className="mx-auto h-16 w-14 text-gold" />
+          <p className="eyebrow mt-8 text-gold-light/80">Brooklyn × Hyderabad</p>
+          <h2 className="mt-5 font-display text-[clamp(2.6rem,6vw,5.5rem)] leading-[0.92] text-pearl">
+            Between two homes,
+            <br />
+            <span className="gold-text italic">one glow.</span>
+          </h2>
+          <div className="gold-rule mx-auto my-8 w-40" />
+          <p className="text-lg leading-relaxed text-pearl/75">
+            We grew up with haldi on our cheeks before every wedding and kajal smudged by a grandmother&apos;s thumb—then
+            moved to a city of fluorescent drugstore aisles.
+          </p>
+          <p className="mt-5 text-lg leading-relaxed text-pearl/75">
+            Apsara &amp; Co. is the bridge: real Ayurvedic recipes, clinically tested, in vessels beautiful enough to
+            leave out on the counter. Heritage you can actually keep.
+          </p>
+          <p className="mt-8 font-display text-2xl italic text-gold-light">— Founders, Apsara &amp; Co.</p>
+        </Reveal>
       </div>
     </section>
   );

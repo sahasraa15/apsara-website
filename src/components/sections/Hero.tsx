@@ -1,86 +1,195 @@
 "use client";
 
-import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
-import { Wordmark } from "@/components/brand/Wordmark";
+import { useRef, type PointerEvent } from "react";
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "framer-motion";
+import { products } from "@/lib/products";
+import { Vessel } from "@/components/brand/Vessel";
+import { GoldDust } from "@/components/brand/GoldDust";
 import { GoldButton } from "@/components/brand/GoldButton";
+
+const ARCH =
+  "M0 1 V0.446 C0 0.268 0.3 0.16 0.425 0.089 C0.4625 0.068 0.4875 0.039 0.5 0 C0.5125 0.039 0.5375 0.068 0.575 0.089 C0.7 0.16 1 0.268 1 0.446 V1 Z";
+
+const shelf = [
+  { id: "kajal-liner", h: "70%" },
+  { id: "lotus-serum", h: "80%" },
+  { id: "kumkumadi-oil", h: "100%" },
+  { id: "beetroot-tint", h: "42%" },
+  { id: "haldi-mask", h: "36%" },
+];
+
+const ease = [0.22, 1, 0.36, 1] as const;
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-  const yImage = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0.35]);
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+
+  const archScale = useTransform(scrollYProgress, [0, 1], [1, 4.2]);
+  const archY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
+  const textY = useTransform(scrollYProgress, [0, 0.3], [0, -90]);
+  const fade = useTransform(scrollYProgress, [0.7, 1], [0, 1]);
+
+  const mx = useMotionValue(0.5);
+  const my = useMotionValue(0.4);
+  const smx = useSpring(mx, { stiffness: 60, damping: 18 });
+  const smy = useSpring(my, { stiffness: 60, damping: 18 });
+  const lampX = useTransform(smx, (v) => `${v * 100}%`);
+  const lampY = useTransform(smy, (v) => `${v * 100}%`);
+  const mask = useMotionTemplate`radial-gradient(260px circle at ${lampX} ${lampY}, black, transparent 75%)`;
+  const glow = useMotionTemplate`radial-gradient(600px circle at ${lampX} ${lampY}, rgba(227,194,124,0.13), transparent 60%)`;
+  const tiltX = useTransform(smy, [0, 1], [6, -6]);
+  const tiltY = useTransform(smx, [0, 1], [-8, 8]);
+
+  const onMove = (e: PointerEvent<HTMLDivElement>) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    mx.set((e.clientX - r.left) / r.width);
+    my.set((e.clientY - r.top) / r.height);
+  };
 
   return (
-    <section
-      id="top"
-      ref={ref}
-      className="relative flex min-h-[100svh] items-end overflow-hidden bg-midnight"
-    >
-      <motion.div style={{ y: yImage }} className="absolute inset-0">
-        <Image
-          src="https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=2400&q=80"
-          alt="Misty palace courtyard with soft morning light"
-          fill
-          priority
-          className="object-cover object-center"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-midnight via-midnight/55 to-midnight/25" />
-        <div className="absolute inset-0 bg-gradient-to-r from-midnight/50 via-transparent to-forest/20" />
-        <div className="jali-overlay absolute inset-0 opacity-30 mix-blend-soft-light" />
-      </motion.div>
-
-      <motion.div
-        style={{ opacity, y: textY }}
-        className="relative z-10 mx-auto w-full max-w-7xl px-5 pb-16 pt-32 md:px-8 md:pb-24"
+    <section id="top" ref={ref} className="relative h-[230vh] bg-night">
+      <div
+        className="sticky top-0 h-[100svh] overflow-hidden"
+        onPointerMove={onMove}
+        style={{ perspective: 1200 }}
       >
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_45%,#0c5029_0%,#0a1c10_55%,#050e08_100%)]" />
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-[radial-gradient(ellipse_60%_80%_at_50%_100%,#a1104733,transparent_70%)]" />
+        <div className="jali absolute inset-0 opacity-[0.05]" />
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 2.1, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-3xl"
-        >
-          <Wordmark
-            size="hero"
-            showCo
-            className="items-start text-left text-gold"
-          />
-          <p className="mt-8 max-w-md font-body text-base leading-relaxed text-sand/90 md:text-lg">
-            Ayurvedic skincare & color for modern rituals—lush heritage, clean
-            finish.
-          </p>
-          <div className="mt-10 flex flex-wrap items-center gap-4">
-            <GoldButton href="#collection" variant="solid">
-              Explore collection
-            </GoldButton>
-            <GoldButton href="#waitlist" variant="outline">
-              Join the waitlist
-            </GoldButton>
-          </div>
-        </motion.div>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2.6, duration: 1 }}
-        className="absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 md:flex"
-      >
-        <span className="text-[0.55rem] uppercase tracking-[0.35em] text-sand/50">
-          Scroll
-        </span>
-        <motion.span
-          className="h-8 w-px bg-gold/50"
-          animate={{ scaleY: [0.4, 1, 0.4], opacity: [0.3, 1, 0.3] }}
-          transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+          className="jali absolute inset-0 opacity-60"
+          style={{ maskImage: mask, WebkitMaskImage: mask }}
         />
-      </motion.div>
+        <motion.div className="absolute inset-0" style={{ background: glow }} />
+        <GoldDust className="absolute inset-0 h-full w-full" />
+
+        <svg width="0" height="0" className="absolute">
+          <clipPath id="hero-arch" clipPathUnits="objectBoundingBox">
+            <path d={ARCH} />
+          </clipPath>
+        </svg>
+
+        <motion.div
+          className="absolute left-1/2 top-[36%] h-[min(40svh,440px)] w-auto -translate-x-1/2 -translate-y-1/2 lg:top-[53%] lg:h-[min(72svh,700px)]"
+          style={{ scale: archScale, y: archY, aspectRatio: "400 / 560", rotateX: tiltX, rotateY: tiltY }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.4, delay: 2.2, ease }}
+        >
+          <div
+            className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_85%,#a1104766,transparent_65%),linear-gradient(180deg,#0b3019,#0a1c10_70%)]"
+            style={{ clipPath: "url(#hero-arch)" }}
+          >
+            <div className="brocade absolute inset-0 opacity-[0.07]" />
+            <div className="absolute left-1/2 top-[14%] h-[24%] w-px -translate-x-1/2 bg-gradient-to-b from-transparent to-gold/60" />
+            <motion.div
+              className="absolute left-1/2 top-[37%] size-3 -translate-x-1/2 rounded-full bg-gold-light shadow-[0_0_40px_14px_#e3c27c66]"
+              animate={{ opacity: [0.7, 1, 0.75, 1, 0.7] }}
+              transition={{ duration: 4, repeat: Infinity }}
+            />
+            <div className="absolute inset-x-[5%] bottom-[16%] flex h-[42%] items-end justify-center gap-[1.5%]">
+              {shelf.map((s, i) => {
+                const p = products.find((x) => x.id === s.id)!;
+                return (
+                  <motion.a
+                    key={s.id}
+                    href={`#room-${s.id}`}
+                    aria-label={p.name}
+                    data-cursor="View"
+                    className="relative flex h-full items-end"
+                    initial={{ y: 60, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 2.6 + i * 0.1, duration: 1, ease }}
+                    whileHover={{ y: -14, scale: 1.06 }}
+                    style={{ height: s.h }}
+                  >
+                    <Vessel product={p} className="drop-shadow-[0_18px_30px_rgba(0,0,0,0.6)]" />
+                  </motion.a>
+                );
+              })}
+            </div>
+            <div className="absolute inset-x-[6%] bottom-[15%] h-[3px] rounded-full bg-gradient-to-r from-transparent via-gold-light to-transparent shadow-[0_0_20px_#e3c27c]" />
+            <div className="absolute inset-x-0 bottom-0 h-[15%] bg-gradient-to-b from-forest-deep/80 to-night" />
+          </div>
+          <svg
+            viewBox="0 0 1 1"
+            preserveAspectRatio="none"
+            className="pointer-events-none absolute inset-0 h-full w-full overflow-visible"
+          >
+            <path d={ARCH} fill="none" stroke="#e3c27c" strokeWidth={1.5} vectorEffect="non-scaling-stroke" />
+            <path
+              d={ARCH}
+              fill="none"
+              stroke="#b8893a"
+              strokeOpacity={0.5}
+              strokeWidth={1}
+              vectorEffect="non-scaling-stroke"
+              transform="translate(-0.04 -0.03) scale(1.08 1.03)"
+            />
+          </svg>
+          <div className="absolute -top-[5%] left-1/2 size-2.5 -translate-x-1/2 rotate-45 bg-gold-light shadow-[0_0_14px_#e3c27c]" />
+        </motion.div>
+
+        <motion.div
+          className="pointer-events-none absolute inset-x-0 top-[9%] px-5 text-center lg:top-[11%]"
+          style={{ opacity: textOpacity }}
+        >
+          <motion.p
+            className="eyebrow text-[0.55rem]! text-gold-light/80 sm:text-[0.68rem]!"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 2.4, duration: 1 }}
+          >
+            Ayurvedic skincare &amp; colour · First edition
+          </motion.p>
+        </motion.div>
+
+        <motion.div
+          className="pointer-events-none absolute inset-x-0 bottom-[25%] z-10 px-5 lg:inset-y-0 lg:flex lg:items-center lg:px-[4vw]"
+          style={{ opacity: textOpacity, y: textY }}
+        >
+          <motion.h1
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 2.5, duration: 1.2, ease }}
+            className="flex w-full flex-col items-center text-center font-display text-[clamp(2.6rem,11vw,4.5rem)] leading-[0.9] tracking-[-0.02em] text-pearl [text-shadow:0_10px_60px_#050e08] lg:grid lg:grid-cols-[1fr_min(52svh,500px)_1fr] lg:items-center lg:text-[clamp(4rem,6.4vw,7.5rem)]"
+          >
+            <span className="lg:pr-4 lg:text-right">
+              Your nani&apos;s
+              <br className="hidden lg:block" /> secrets,
+            </span>
+            <span aria-hidden className="hidden lg:block" />
+            <span className="gold-text italic lg:pl-4 lg:text-left">
+              bottled
+              <br className="hidden lg:block" /> in gold.
+            </span>
+          </motion.h1>
+        </motion.div>
+
+        <motion.div className="absolute inset-x-0 bottom-[5%] z-10 px-5" style={{ opacity: textOpacity }}>
+          <motion.div
+            className="flex flex-wrap items-center justify-center gap-3"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 2.9, duration: 1, ease }}
+          >
+            <GoldButton href="#vanity">Enter the vanity</GoldButton>
+            <GoldButton href="#consult" variant="outline">
+              Find my ritual
+            </GoldButton>
+          </motion.div>
+        </motion.div>
+
+        <motion.div className="pointer-events-none absolute inset-0 bg-night" style={{ opacity: fade }} />
+      </div>
     </section>
   );
 }
