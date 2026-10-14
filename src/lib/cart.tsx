@@ -140,8 +140,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
               style={{
                 left: 0,
                 top: 0,
-                background: `radial-gradient(circle at 35% 30%, #f3dda4, ${f.color} 55%, #0a1c10)`,
-                boxShadow: `0 0 24px ${f.color}, 0 0 60px #e3c27c88`,
+                background: `radial-gradient(circle at 35% 30%, #ffffff, ${f.color} 60%)`,
+                boxShadow: `0 6px 20px ${f.color}88`,
               }}
               initial={{ x: f.x - 10, y: f.y - 10, scale: 0.4, opacity: 0 }}
               animate={{

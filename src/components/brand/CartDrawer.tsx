@@ -1,13 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Minus, Plus, X } from "lucide-react";
+import { Check, Minus, Plus, ShoppingBag, X } from "lucide-react";
 import { useCart } from "@/lib/cart";
 import { FREE_GIFT_THRESHOLD, formatPrice, productById } from "@/lib/products";
 import { Vessel } from "./Vessel";
-import { LotusMark } from "./LotusMark";
-import { GoldButton } from "./GoldButton";
+import { Button } from "./Button";
 
 export function CartDrawer() {
   const { lines, open, setOpen, subtotal, setQty, clear, count } = useCart();
@@ -32,7 +32,7 @@ export function CartDrawer() {
         <>
           <motion.div
             key="scrim"
-            className="fixed inset-0 z-[80] bg-night/70 backdrop-blur-sm"
+            className="fixed inset-0 z-[80] bg-ink/40 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -42,34 +42,33 @@ export function CartDrawer() {
             key="drawer"
             role="dialog"
             aria-label="Your bag"
-            className="fixed inset-y-0 right-0 z-[85] flex w-full max-w-md flex-col border-l border-pearl/10 bg-midnight"
+            className="fixed inset-y-0 right-0 z-[85] flex w-full max-w-md flex-col bg-white text-ink shadow-2xl"
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", stiffness: 260, damping: 32 }}
           >
-            <header className="relative flex items-center justify-between border-b border-pearl/10 px-6 py-5">
-              <div>
-                <p className="eyebrow text-pearl/60">Your bag</p>
-                <p className="mt-1 font-display text-2xl text-pearl">
-                  {count} {count === 1 ? "item" : "items"}
-                </p>
-              </div>
+            <header className="flex items-center justify-between border-b border-ink/10 px-6 py-5">
+              <p className="font-display text-2xl">
+                Your bag <span className="text-ink/45">({count})</span>
+              </p>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="Close bag"
-                className="rounded-full border border-pearl/20 p-2 text-pearl transition hover:border-pearl"
+                className="rounded-full p-2 transition hover:bg-petal"
               >
-                <X className="size-4" strokeWidth={1.25} />
+                <X className="size-5" />
               </button>
             </header>
 
             {reserved ? (
-              <div className="relative flex flex-1 flex-col items-center justify-center px-8 text-center">
-                <LotusMark draw className="h-28 w-24 text-gold" />
-                <p className="mt-8 font-display text-3xl text-pearl">You&apos;re all set.</p>
-                <p className="mt-3 max-w-xs text-sm text-pearl/65">
+              <div className="flex flex-1 flex-col items-center justify-center px-8 text-center">
+                <span className="flex size-16 items-center justify-center rounded-full bg-forest text-white">
+                  <Check className="size-7" />
+                </span>
+                <p className="mt-6 font-display text-3xl">You&apos;re all set.</p>
+                <p className="mt-3 max-w-xs text-sm text-ink/65">
                   Your order is reserved. We&apos;ll email you the moment we launch—before anyone else.
                 </p>
                 <button
@@ -78,47 +77,45 @@ export function CartDrawer() {
                     setReserved(false);
                     setOpen(false);
                   }}
-                  className="mt-8 text-sm text-pearl/70 underline-offset-8 hover:underline"
+                  className="mt-8 text-sm font-medium underline underline-offset-4"
                 >
                   Keep shopping
                 </button>
               </div>
             ) : lines.length === 0 ? (
-              <div className="relative flex flex-1 flex-col items-center justify-center px-8 text-center">
-                <LotusMark className="h-24 w-20 text-gold/50" jewel={false} />
-                <p className="mt-6 font-display text-2xl text-pearl">Your bag is empty.</p>
-                <p className="mt-2 text-sm text-pearl/60">Let&apos;s fix that.</p>
-                <GoldButton
-                  className="mt-8"
-                  href="#vanity"
-                  onClick={() => setOpen(false)}
-                >
-                  Shop the collection
-                </GoldButton>
+              <div className="flex flex-1 flex-col items-center justify-center px-8 text-center">
+                <span className="flex size-16 items-center justify-center rounded-full bg-petal text-magenta">
+                  <ShoppingBag className="size-7" strokeWidth={1.5} />
+                </span>
+                <p className="mt-6 font-display text-3xl">Your bag is empty.</p>
+                <p className="mt-2 text-sm text-ink/60">Let&apos;s fix that.</p>
+                <Button className="mt-8" href="/shop" onClick={() => setOpen(false)}>
+                  Shop all products
+                </Button>
               </div>
             ) : (
               <>
-                <div className="relative border-b border-pearl/10 px-6 py-4">
-                  <p className="text-sm text-pearl/80">
+                <div className="bg-petal/60 px-6 py-4">
+                  <p className="text-sm">
                     {remaining > 0 ? (
                       <>
-                        <span className="text-pearl">{formatPrice(remaining)}</span> away from a free
+                        You&apos;re <span className="font-semibold">{formatPrice(remaining)}</span> away from a free
                         travel-size liner
                       </>
                     ) : (
-                      <>You unlocked a free travel-size liner ✓</>
+                      <>You unlocked a free travel-size liner 🎉</>
                     )}
                   </p>
-                  <div className="mt-3 h-1 overflow-hidden rounded-full bg-pearl/10">
+                  <div className="mt-2.5 h-1.5 overflow-hidden rounded-full bg-white">
                     <motion.div
-                      className="h-full rounded-full bg-gradient-to-r from-magenta to-[#e0507e]"
+                      className="h-full rounded-full bg-magenta"
                       animate={{ width: `${progress * 100}%` }}
                       transition={{ type: "spring", stiffness: 120, damping: 20 }}
                     />
                   </div>
                 </div>
 
-                <ul className="relative flex-1 space-y-1 overflow-y-auto px-4 py-4">
+                <ul className="flex-1 space-y-1 overflow-y-auto px-4 py-4">
                   <AnimatePresence initial={false}>
                     {lines.map((line) => {
                       const p = productById[line.id];
@@ -130,58 +127,59 @@ export function CartDrawer() {
                           initial={{ opacity: 0, x: 30 }}
                           animate={{ opacity: 1, x: 0 }}
                           exit={{ opacity: 0, x: 30, height: 0 }}
-                          className="flex items-center gap-4 rounded-lg p-2 hover:bg-forest-deep/60"
+                          className="flex items-center gap-4 rounded-xl p-2"
                         >
-                          <div
-                            className="flex h-20 w-16 shrink-0 items-center justify-center rounded-md p-1"
-                            style={{ background: p.room }}
+                          <Link
+                            href={`/shop/${p.id}`}
+                            onClick={() => setOpen(false)}
+                            className="flex h-20 w-16 shrink-0 items-center justify-center rounded-lg p-1.5"
+                            style={{ background: p.tint }}
                           >
                             <Vessel product={p} />
-                          </div>
+                          </Link>
                           <div className="min-w-0 flex-1">
-                            <p className="font-display text-lg leading-tight text-pearl">{p.name}</p>
-                            <p className="mt-0.5 text-xs text-pearl/55">
+                            <p className="font-medium leading-tight">{p.name}</p>
+                            <p className="mt-0.5 text-xs text-ink/55">
                               {line.shade ? `Shade: ${line.shade}` : p.size}
-                              {line.bundle && <span className="text-pearl/75"> · {line.bundle}</span>}
+                              {line.bundle && <span className="text-magenta"> · {line.bundle}</span>}
                             </p>
-                            <div className="mt-2 flex items-center gap-3">
+                            <div className="mt-2 inline-flex items-center rounded-full border border-ink/15">
                               <button
                                 type="button"
                                 aria-label="Decrease"
                                 onClick={() => setQty(line.key, line.qty - 1)}
-                                className="rounded-full border border-pearl/20 p-1 text-pearl/80 hover:border-pearl"
+                                className="p-1.5 hover:text-magenta"
                               >
                                 <Minus className="size-3" />
                               </button>
-                              <span className="w-4 text-center text-sm text-pearl">{line.qty}</span>
+                              <span className="w-5 text-center text-sm">{line.qty}</span>
                               <button
                                 type="button"
                                 aria-label="Increase"
                                 onClick={() => setQty(line.key, line.qty + 1)}
-                                className="rounded-full border border-pearl/20 p-1 text-pearl/80 hover:border-pearl"
+                                className="p-1.5 hover:text-magenta"
                               >
                                 <Plus className="size-3" />
                               </button>
                             </div>
                           </div>
-                          <p className="font-display text-lg text-pearl">
-                            {formatPrice(line.price * line.qty)}
-                          </p>
+                          <p className="font-medium">{formatPrice(line.price * line.qty)}</p>
                         </motion.li>
                       );
                     })}
                   </AnimatePresence>
                 </ul>
 
-                <footer className="relative border-t border-pearl/10 px-6 py-5">
+                <footer className="border-t border-ink/10 px-6 py-5">
                   <div className="flex items-baseline justify-between">
-                    <span className="eyebrow text-pearl/60">Subtotal</span>
-                    <span className="font-display text-3xl text-pearl">{formatPrice(subtotal)}</span>
+                    <span className="text-ink/60">Subtotal</span>
+                    <span className="font-display text-3xl">{formatPrice(subtotal)}</span>
                   </div>
-                  <p className="mt-1 text-xs text-pearl/45">
+                  <p className="mt-1 text-xs text-ink/50">
                     Ships this spring. You won&apos;t be charged until launch.
                   </p>
-                  <GoldButton
+                  <Button
+                    size="lg"
                     className="mt-5 w-full"
                     onClick={() => {
                       setReserved(true);
@@ -189,7 +187,7 @@ export function CartDrawer() {
                     }}
                   >
                     Reserve my order
-                  </GoldButton>
+                  </Button>
                 </footer>
               </>
             )}

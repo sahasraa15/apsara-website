@@ -18,19 +18,18 @@ npm run dev
 
 Open [http://127.0.0.1:4321](http://127.0.0.1:4321).
 
-## What’s on the page
+## Pages
 
-- Hero: product shelf inside a rounded arch with a soft cursor glow; scrolling walks you through the arch
-- Collection: pinned horizontal scroll, one color-shifting panel per product with tilt-to-cursor vessels, stock bar and add-to-bag
-- Try a shade: drag the beetroot tint from Sheer to Statement and preview it on six skin tones
-- Skin quiz: three questions → a personalized three-product routine at 15% off, added in one click
-- Ingredients: ingredient orbs with origin stories, linked to the products that contain them
-- Story: parallax collage cut from the moodboard
-- Early access: live spot counter, perks, and a numbered confirmation card on sign-up
-- Bag drawer with free-gift progress bar and pre-launch "reserve" checkout (client-side demo, persisted in localStorage)
+- `/` Home: hero with mouse-parallax product group, trust badges, bestsellers, live tint try-on, skin-quiz teaser, ingredients, reviews, early-access signup
+- `/shop` All products, filterable by Skincare / Makeup (`/shop?line=Makeup`)
+- `/shop/[id]` Product page: tilt-to-cursor product, benefits, shade picker (tint), quantity, details, "pairs well with"
+- `/quiz` Three-question Ayurvedic skin-type quiz → a routine bundle at 15% off
+- `/ingredients` Interactive ingredient wheel, full ingredient list, "what we never use"
+- `/about` Story, "What is Ayurveda?", values, contact & FAQ
+- Bag drawer on every page with free-gift progress and pre-launch "reserve" checkout (client-side demo, persisted in localStorage)
 
 Product vessels are drawn in SVG (`src/components/brand/Vessel.tsx`); imagery in `public/images/mood/` is cropped from the moodboard.
 
 ## Brand notes
 
-Palette (forest green, magenta, gold accents) and the lotus mark are drawn from the project moodboard in `assets/` and `public/images/moodboard.jpg`.
+Palette (pink lotus base, forest green, magenta) and the lotus mark are drawn from the project moodboard in `assets/` and `public/images/moodboard.jpg`.

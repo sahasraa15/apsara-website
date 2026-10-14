@@ -4,11 +4,15 @@ export type Product = {
   id: string;
   name: string;
   short: string;
-  category: "Face" | "Treatment" | "Cleanse" | "Mask" | "Makeup";
+  category: "Serum" | "Face oil" | "Cleanser" | "Mask" | "Eyes" | "Lips & cheeks";
+  line: "Skincare" | "Makeup";
   price: number;
   size: string;
+  /** Which Ayurvedic skin type it's built for */
   dosha: string;
+  tagline: string;
   blurb: string;
+  benefits: string[];
   ritual: string;
   notes: string[];
   vessel: VesselKind;
@@ -16,11 +20,11 @@ export type Product = {
   glass: string;
   /** Liquid or contents colour */
   fill: string;
-  /** Background of the product's room in the vanity */
-  room: string;
+  /** Soft background behind the product on light pages */
+  tint: string;
   rating: number;
   reviews: number;
-  left: number;
+  bestseller?: boolean;
 };
 
 export const products: Product[] = [
@@ -28,121 +32,137 @@ export const products: Product[] = [
     id: "lotus-serum",
     name: "Lotus Radiance Serum",
     short: "Lotus Serum",
-    category: "Face",
+    category: "Serum",
+    line: "Skincare",
     price: 58,
     size: "30 ml",
-    dosha: "Pitta-balancing",
+    dosha: "Best for warm, reactive skin (Pitta)",
+    tagline: "Calms redness, boosts glow",
     blurb:
-      "Pink lotus and sandalwood calm the flush and leave a glow that looks like you slept nine hours. (We won't tell.)",
+      "Pink lotus and sandalwood calm redness and leave a glow that looks like you slept nine hours. (We won't tell.)",
+    benefits: ["Visibly calms redness", "Lightweight daily hydration", "Layers under makeup"],
     ritual: "Press three drops into damp skin, morning or night.",
     notes: ["Pink lotus", "Sandalwood", "Rose water"],
     vessel: "dropper",
     glass: "#c4416f",
     fill: "#f08fb0",
-    room: "#3a0819",
+    tint: "#fbd7e3",
     rating: 4.9,
     reviews: 412,
-    left: 214,
+    bestseller: true,
   },
   {
     id: "kumkumadi-oil",
     name: "Kumkumadi Night Oil",
     short: "Kumkumadi Oil",
-    category: "Treatment",
+    category: "Face oil",
+    line: "Skincare",
     price: 72,
     size: "20 ml",
-    dosha: "Vata-nourishing",
+    dosha: "Best for dry, delicate skin (Vata)",
+    tagline: "Overnight glow with saffron",
     blurb:
-      "Sixteen botanicals and real saffron in a lightweight overnight oil. Wake up looking like you have your life together.",
+      "The classic Ayurvedic beauty oil: sixteen botanicals and real saffron in a lightweight overnight formula. Wake up looking like you have your life together.",
+    benefits: ["Evens out skin tone", "Deep overnight moisture", "Absorbs without greasiness"],
     ritual: "Warm four drops between your palms and press into skin before bed.",
     notes: ["Saffron", "Sandalwood", "Manjistha"],
     vessel: "oil",
     glass: "#a8631a",
     fill: "#e8a33d",
-    room: "#2a1704",
+    tint: "#fbe3c8",
     rating: 4.8,
     reviews: 638,
-    left: 96,
+    bestseller: true,
   },
   {
     id: "neem-cleanser",
-    name: "Neem Clarity Cleanse",
-    short: "Neem Cleanse",
-    category: "Cleanse",
+    name: "Neem Clarity Cleanser",
+    short: "Neem Cleanser",
+    category: "Cleanser",
+    line: "Skincare",
     price: 36,
     size: "120 ml",
-    dosha: "Kapha-clarifying",
+    dosha: "Best for oily, congested skin (Kapha)",
+    tagline: "Clears pores, never tight",
     blurb:
       "A cool gel of neem and holy basil that clears the day away without that tight, squeaky feeling.",
+    benefits: ["Clears pores and excess oil", "Keeps the skin barrier intact", "Gentle enough for twice daily"],
     ritual: "Massage onto damp skin for a minute. Rinse with cool water.",
     notes: ["Neem", "Holy basil", "Aloe"],
     vessel: "tube",
     glass: "#1f6b3c",
     fill: "#7fc28f",
-    room: "#082a15",
+    tint: "#d9efdf",
     rating: 4.7,
     reviews: 289,
-    left: 341,
   },
   {
     id: "haldi-mask",
     name: "Golden Turmeric Mask",
     short: "Turmeric Mask",
     category: "Mask",
+    line: "Skincare",
     price: 44,
     size: "60 g",
-    dosha: "All doshas",
+    dosha: "Good for every skin type",
+    tagline: "Ten-minute brightening",
     blurb:
-      "Turmeric, kaolin clay and rose for a weekly brightening mask. Ten minutes, real glow, no filter needed.",
+      "Turmeric, kaolin clay and rose in a weekly brightening mask. Ten minutes, real glow, no filter needed.",
+    benefits: ["Brightens dull skin", "Gently draws out impurities", "Won't stain"],
     ritual: "Apply a thick layer, leave ten minutes, remove with a warm cloth. Once a week.",
     notes: ["Turmeric", "Kaolin clay", "Rose"],
     vessel: "jar",
     glass: "#c99a3b",
     fill: "#f2c14e",
-    room: "#0a1c10",
+    tint: "#fbecc4",
     rating: 4.9,
     reviews: 521,
-    left: 158,
+    bestseller: true,
   },
   {
     id: "kajal-liner",
     name: "Soft Kohl Liner",
     short: "Kohl Liner",
-    category: "Makeup",
+    category: "Eyes",
+    line: "Makeup",
     price: 28,
     size: "0.35 g",
-    dosha: "Eye ritual",
+    dosha: "Gentle on sensitive eyes",
+    tagline: "Smudge-proof, all-day black",
     blurb:
-      "Buttery-soft, smoke-black, and smudge-proof all day. Gentle enough for the waterline.",
+      "Inspired by traditional kajal. Buttery-soft, smoke-black, and smudge-proof all day. Gentle enough for the waterline.",
+    benefits: ["Glides on without tugging", "Smudge-proof for 12 hours", "Ophthalmologist tested"],
     ritual: "Line the waterline or lash line. Smudge with a fingertip for a softer look.",
-    notes: ["Ghee", "Almond oil", "Camphor"],
+    notes: ["Castor oil", "Almond oil", "Camphor"],
     vessel: "kajal",
     glass: "#0b0f0c",
-    fill: "#b8893a",
-    room: "#050e08",
+    fill: "#3a3a3a",
+    tint: "#e4e6e5",
     rating: 4.8,
     reviews: 903,
-    left: 72,
   },
   {
     id: "beetroot-tint",
     name: "Beetroot Lip & Cheek",
     short: "Beetroot Tint",
-    category: "Makeup",
+    category: "Lips & cheeks",
+    line: "Makeup",
     price: 32,
     size: "8 g",
-    dosha: "Color",
+    dosha: "Flatters every skin tone",
+    tagline: "Buildable natural flush",
     blurb:
       "One sheer stain that builds from barely-there to bold. Lips, cheeks, even a dab on the eyelids.",
+    benefits: ["Buildable sheer-to-bold color", "Conditions lips with kokum butter", "Colored by real beetroot"],
     ritual: "Tap on with a fingertip. Layer until you like what you see.",
     notes: ["Beetroot", "Rose", "Kokum butter"],
     vessel: "pot",
     glass: "#a11047",
     fill: "#d13a6c",
-    room: "#4d0821",
+    tint: "#f8d0dc",
     rating: 4.9,
     reviews: 1204,
-    left: 41,
+    bestseller: true,
   },
 ];
 
@@ -174,7 +194,7 @@ export const ingredients: Ingredient[] = [
   {
     id: "saffron",
     name: "Saffron",
-    role: "Luminosity",
+    role: "Evens tone",
     origin: "Kashmir, India",
     story:
       "Hand-picked threads, 150 flowers to the gram. A little evens out tone and adds a candle-lit glow.",
@@ -188,7 +208,7 @@ export const ingredients: Ingredient[] = [
     origin: "Tamil Nadu, India",
     story:
       "The glow trick generations swore by, now backed by research. Antioxidant, brightening, calming.",
-    color: "#f2c14e",
+    color: "#e9b234",
     products: ["haldi-mask"],
   },
   {
@@ -198,23 +218,23 @@ export const ingredients: Ingredient[] = [
     origin: "Rajasthan, India",
     story:
       "The backyard tree with a medicine-cabinet reputation. Clears pores without stripping your skin barrier.",
-    color: "#5fae73",
+    color: "#4f9e66",
     products: ["neem-cleanser"],
   },
   {
     id: "sandalwood",
     name: "Sandalwood",
-    role: "Cools & scents",
+    role: "Cools & soothes",
     origin: "Karnataka, India",
     story:
       "Naturally cooling and calming, with a warm woody scent that lingers. Great for redness.",
-    color: "#c9a27a",
+    color: "#b98f66",
     products: ["lotus-serum", "kumkumadi-oil"],
   },
   {
     id: "beetroot",
     name: "Beetroot",
-    role: "Natural colour",
+    role: "Natural color",
     origin: "Punjab, India",
     story:
       "The original lip stain—stolen from the kitchen. Buildable, sheer, and totally natural.",
@@ -222,51 +242,77 @@ export const ingredients: Ingredient[] = [
     products: ["beetroot-tint"],
   },
   {
-    id: "ghee",
-    name: "Ghee",
-    role: "Nourishes",
+    id: "castor",
+    name: "Castor Oil",
+    role: "Conditions",
     origin: "Gujarat, India",
     story:
-      "Clarified butter, whipped until silky. The secret behind a liner that glides and never tugs.",
-    color: "#f3dda4",
+      "Cold-pressed and used in homemade kajal for generations. Keeps the liner silky and conditions lashes.",
+    color: "#d9b25c",
     products: ["kajal-liner"],
   },
 ];
 
+export const ingredientsFor = (productId: string) =>
+  ingredients.filter((i) => i.products.includes(productId));
+
 export type Dosha = "vata" | "pitta" | "kapha";
+
+export const doshaInfo: Record<Dosha, { name: string; plain: string; element: string }> = {
+  vata: { name: "Vata", plain: "Dry & delicate", element: "Air" },
+  pitta: { name: "Pitta", plain: "Warm & reactive", element: "Fire" },
+  kapha: { name: "Kapha", plain: "Oily & congested", element: "Earth" },
+};
 
 export const doshaRituals: Record<
   Dosha,
   {
     title: string;
-    element: string;
     copy: string;
     products: string[];
     discount: number;
   }
 > = {
   vata: {
-    title: "The Moonlit Routine",
-    element: "Air & space",
+    title: "The Moisture Routine",
     copy: "Your skin is on the dry side and wants richness. Oil-first, slow hands, lots of moisture.",
     products: ["kumkumadi-oil", "lotus-serum", "haldi-mask"],
     discount: 0.15,
   },
   pitta: {
     title: "The Calm Routine",
-    element: "Fire & water",
     copy: "Your skin runs warm and reactive. Calm the redness first, then glow.",
     products: ["lotus-serum", "neem-cleanser", "beetroot-tint"],
     discount: 0.15,
   },
   kapha: {
     title: "The Fresh Start Routine",
-    element: "Earth & water",
     copy: "Your skin leans oily. Clear gently, brighten weekly, and keep it fresh.",
     products: ["neem-cleanser", "haldi-mask", "kajal-liner"],
     discount: 0.15,
   },
 };
+
+export const reviews = [
+  {
+    name: "Jess M.",
+    place: "Austin, TX",
+    product: "lotus-serum",
+    quote: "My redness is honestly half of what it was. I've repurchased twice and I never repurchase anything.",
+  },
+  {
+    name: "Priya K.",
+    place: "Jersey City, NJ",
+    product: "kumkumadi-oil",
+    quote: "My mom swore by kumkumadi. This is the first one that doesn't feel heavy—and the bottle is gorgeous.",
+  },
+  {
+    name: "Taylor R.",
+    place: "Portland, OR",
+    product: "beetroot-tint",
+    quote: "One pot, lips and cheeks, looks like my actual flush. It's the only thing in my makeup bag now.",
+  },
+];
 
 export const FREE_GIFT_THRESHOLD = 95;
 

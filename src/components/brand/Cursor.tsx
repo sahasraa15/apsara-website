@@ -47,18 +47,18 @@ export function Cursor() {
   return (
     <motion.div
       aria-hidden
-      className="pointer-events-none fixed left-0 top-0 z-[95] flex items-center justify-center rounded-full border border-gold-light/80 shadow-[0_0_24px_#e3c27c40]"
+      className="pointer-events-none fixed left-0 top-0 z-[95] flex items-center justify-center rounded-full border border-ink/60 mix-blend-normal"
       style={{ x: sx, y: sy, translateX: "-50%", translateY: "-50%" }}
       animate={{
         width: size,
         height: size,
         scale: down ? 0.85 : 1,
-        backgroundColor: label ? "rgba(227,194,124,0.95)" : "rgba(227,194,124,0)",
+        backgroundColor: label ? "rgba(10,28,16,0.92)" : "rgba(10,28,16,0)",
       }}
       transition={{ type: "spring", stiffness: 400, damping: 30 }}
     >
       {label && (
-        <span className="font-caps text-[0.55rem] font-semibold uppercase tracking-[0.2em] text-midnight">
+        <span className="text-[0.62rem] font-medium uppercase tracking-[0.12em] text-white">
           {label}
         </span>
       )}

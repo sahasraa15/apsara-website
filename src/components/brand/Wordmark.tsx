@@ -37,7 +37,7 @@ export function Wordmark({
   return (
     <span
       className={cn(
-        "font-caps inline-flex flex-col leading-none",
+        "inline-flex flex-col font-medium leading-none",
         sizes[size],
         className
       )}

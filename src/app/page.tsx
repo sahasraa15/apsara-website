@@ -1,33 +1,23 @@
-import { SiteNav } from "@/components/brand/SiteNav";
-import { Cursor } from "@/components/brand/Cursor";
-import { CartDrawer } from "@/components/brand/CartDrawer";
-import { Hero } from "@/components/sections/Hero";
-import { Vanity } from "@/components/sections/Vanity";
-import { Marquee } from "@/components/sections/Marquee";
-import { ShadeStudio } from "@/components/sections/ShadeStudio";
-import { Consult } from "@/components/sections/Consult";
-import { Garden } from "@/components/sections/Garden";
-import { Story } from "@/components/sections/Story";
-import { FoundingCircle } from "@/components/sections/FoundingCircle";
-import { SiteFooter } from "@/components/sections/SiteFooter";
+import { Hero } from "@/components/home/Hero";
+import { TrustBar } from "@/components/home/TrustBar";
+import { Bestsellers } from "@/components/home/Bestsellers";
+import { TryOn } from "@/components/home/TryOn";
+import { QuizTeaser } from "@/components/home/QuizTeaser";
+import { IngredientsTeaser } from "@/components/home/IngredientsTeaser";
+import { Reviews } from "@/components/home/Reviews";
+import { EarlyAccess } from "@/components/home/EarlyAccess";
 
 export default function Home() {
   return (
     <>
-      <SiteNav />
-      <CartDrawer />
-      <Cursor />
-      <main className="flex-1">
-        <Hero />
-        <Vanity />
-        <Marquee />
-        <ShadeStudio />
-        <Consult />
-        <Garden />
-        <Story />
-        <FoundingCircle />
-      </main>
-      <SiteFooter />
+      <Hero />
+      <TrustBar />
+      <Bestsellers />
+      <TryOn />
+      <QuizTeaser />
+      <IngredientsTeaser />
+      <Reviews />
+      <EarlyAccess />
     </>
   );
 }
