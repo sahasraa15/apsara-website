@@ -17,12 +17,10 @@ export type CartLine = {
   id: string;
   qty: number;
   price: number;
-  shade?: string;
   bundle?: string;
 };
 
 type AddOptions = {
-  shade?: string;
   bundle?: string;
   price?: number;
   qty?: number;
@@ -59,7 +57,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       // eslint-disable-next-line react-hooks/set-state-in-effect -- hydrate from storage once on mount
-      if (raw) setLines(JSON.parse(raw));
+      if (raw) setLines((JSON.parse(raw) as CartLine[]).filter((l) => productById[l.id]));
     } catch {}
     setHydrated(true);
   }, []);
@@ -71,7 +69,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const add = useCallback((id: string, options: AddOptions = {}) => {
     const product = productById[id];
     if (!product) return;
-    const key = [id, options.shade, options.bundle].filter(Boolean).join("|");
+    const key = [id, options.bundle].filter(Boolean).join("|");
     const qty = options.qty ?? 1;
     setLines((prev) => {
       const existing = prev.find((l) => l.key === key);
@@ -85,7 +83,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
           id,
           qty,
           price: options.price ?? product.price,
-          shade: options.shade,
           bundle: options.bundle,
         },
       ];

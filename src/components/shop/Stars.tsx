@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 export function Stars({ rating, className }: { rating: number; className?: string }) {
   return (
-    <span className={cn("flex text-magenta", className)} aria-label={`${rating} out of 5 stars`}>
+    <span className={cn("flex text-gold", className)} aria-label={`${rating} out of 5 stars`}>
       {Array.from({ length: 5 }).map((_, i) => (
         <Star
           key={i}

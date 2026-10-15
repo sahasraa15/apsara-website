@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { MapPin } from "lucide-react";
-import { ingredients, productById } from "@/lib/products";
-import { IngredientWheel } from "@/components/ingredients/IngredientWheel";
+import { IngredientPanels } from "@/components/ingredients/IngredientPanels";
 
 export const metadata: Metadata = {
   title: "Ingredients",
@@ -33,47 +30,18 @@ export default function IngredientsPage() {
             Each product is built around one hero ingredient that Ayurveda has relied on for centuries. We trace every
             one back to the farm, then test the finished formula with dermatologists.
           </p>
-          <div className="mt-14">
-            <IngredientWheel />
-          </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1400px] px-5 py-20 md:px-10 md:py-28">
-        <h2 className="font-display text-4xl md:text-5xl">The full list</h2>
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {ingredients.map((ing) => (
-            <article id={ing.id} key={ing.id} className="scroll-mt-28 rounded-3xl bg-white p-6 ring-1 ring-ink/5">
-              <div className="flex items-center gap-4">
-                <span
-                  className="size-14 shrink-0 rounded-full"
-                  style={{ background: `radial-gradient(circle at 35% 30%, #ffffff, ${ing.color} 80%)` }}
-                />
-                <div>
-                  <h3 className="font-display text-3xl leading-none">{ing.name}</h3>
-                  <p className="mt-1 text-sm text-magenta">{ing.role}</p>
-                </div>
-              </div>
-              <p className="mt-5 text-sm leading-relaxed text-ink/70">{ing.story}</p>
-              <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-ink/10 pt-4 text-xs">
-                <span className="flex items-center gap-1.5 text-ink/55">
-                  <MapPin className="size-3.5" /> {ing.origin}
-                </span>
-                <span className="flex flex-wrap gap-2">
-                  {ing.products.map((id) => (
-                    <Link
-                      key={id}
-                      href={`/shop/${id}`}
-                      className="rounded-full bg-petal px-3 py-1 font-medium text-ink hover:bg-lotus"
-                    >
-                      {productById[id].short}
-                    </Link>
-                  ))}
-                </span>
-              </div>
-            </article>
-          ))}
+      <section className="mx-auto max-w-[1400px] px-5 py-16 md:px-10 md:py-24">
+        <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+          <h2 className="font-display text-4xl md:text-6xl">Meet the botanicals.</h2>
+          <p className="text-sm text-ink/55">
+            <span className="hidden lg:inline">Hover</span>
+            <span className="lg:hidden">Tap</span> an ingredient to explore it.
+          </p>
         </div>
+        <IngredientPanels />
       </section>
 
       <section className="bg-forest text-white">

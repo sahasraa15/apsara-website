@@ -9,7 +9,7 @@ type ButtonProps = {
   children: ReactNode;
   href?: string;
   onClick?: (e: MouseEvent<HTMLElement>) => void;
-  variant?: "primary" | "outline" | "light" | "magenta";
+  variant?: "primary" | "outline" | "light" | "magenta" | "gold";
   size?: "md" | "lg";
   className?: string;
   type?: "button" | "submit";
@@ -21,6 +21,7 @@ const variants = {
   outline: "border border-ink/25 text-ink hover:border-ink hover:bg-white/60",
   light: "bg-white text-ink hover:bg-petal",
   magenta: "bg-magenta text-white hover:bg-[#880c3b]",
+  gold: "gold-fill bg-[length:200%_100%] bg-left text-ink shadow-[0_8px_30px_-8px_rgba(184,137,58,0.7)] transition-[background-position] duration-700 hover:bg-right",
 };
 
 const sizes = {

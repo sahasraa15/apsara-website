@@ -34,8 +34,8 @@ export function SiteNav() {
 
   return (
     <>
-      <div className="bg-forest px-4 py-2 text-center text-xs text-white">
-        Free shipping over $50 · Free travel-size liner on orders over $95
+      <div className="bg-forest px-4 py-2 text-center text-xs text-gold-light">
+        Free shipping over $50 · Free mini Lotus Serum on orders over $95
       </div>
       <header
         className={cn(
@@ -45,7 +45,7 @@ export function SiteNav() {
       >
         <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-5 md:h-[72px] md:px-10">
           <Link href="/" className="flex items-center gap-2 text-forest" aria-label="Apsara home">
-            <LotusMark className="h-8 w-7 text-forest md:h-9 md:w-8" />
+            <LotusMark className="h-8 w-7 text-gold md:h-9 md:w-8" />
             <Wordmark size="sm" className="text-forest" />
           </Link>
 

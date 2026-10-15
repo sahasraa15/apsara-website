@@ -100,10 +100,10 @@ export function CartDrawer() {
                     {remaining > 0 ? (
                       <>
                         You&apos;re <span className="font-semibold">{formatPrice(remaining)}</span> away from a free
-                        travel-size liner
+                        mini Lotus Serum
                       </>
                     ) : (
-                      <>You unlocked a free travel-size liner 🎉</>
+                      <>You unlocked a free mini Lotus Serum 🎉</>
                     )}
                   </p>
                   <div className="mt-2.5 h-1.5 overflow-hidden rounded-full bg-white">
@@ -140,7 +140,7 @@ export function CartDrawer() {
                           <div className="min-w-0 flex-1">
                             <p className="font-medium leading-tight">{p.name}</p>
                             <p className="mt-0.5 text-xs text-ink/55">
-                              {line.shade ? `Shade: ${line.shade}` : p.size}
+                              {p.size}
                               {line.bundle && <span className="text-magenta"> · {line.bundle}</span>}
                             </p>
                             <div className="mt-2 inline-flex items-center rounded-full border border-ink/15">

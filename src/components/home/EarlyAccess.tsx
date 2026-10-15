@@ -12,7 +12,7 @@ const SPOTS = 1200;
 const perks = [
   { icon: Tag, title: "Launch pricing for life", copy: "Lock in today's prices on every reorder." },
   { icon: Sparkles, title: "First dibs on drops", copy: "Shop new launches 48 hours early." },
-  { icon: Gift, title: "A free mini liner", copy: "Travel-size Soft Kohl Liner in your first order." },
+  { icon: Gift, title: "A free mini serum", copy: "Travel-size Lotus Radiance Serum in your first order." },
 ];
 
 export function EarlyAccess() {
@@ -46,17 +46,17 @@ export function EarlyAccess() {
 
   return (
     <section id="early-access" className="mx-auto max-w-[1400px] px-5 py-20 md:px-10 md:py-28">
-      <div className="overflow-hidden rounded-[2.5rem] bg-magenta px-6 py-14 text-white md:px-16 md:py-20">
+      <div className="relative overflow-hidden rounded-[2.5rem] bg-magenta px-6 py-14 text-white ring-1 ring-gold/40 md:px-16 md:py-20">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <Reveal>
-            <p className="eyebrow text-lotus">Early access</p>
+            <p className="eyebrow text-gold-light">Early access</p>
             <h2 className="mt-3 font-display text-[clamp(2.4rem,5vw,4.4rem)] leading-[1]">
               The first {SPOTS.toLocaleString()} get the best perks.
             </h2>
             <div className="mt-8 max-w-md">
               <div className="flex items-baseline justify-between text-sm text-white/80">
                 <span>
-                  <span ref={counterRef} className="font-display text-3xl text-white tabular-nums">
+                  <span ref={counterRef} className="gold-foil font-display text-3xl tabular-nums">
                     {claimed}
                   </span>{" "}
                   spots claimed
@@ -65,7 +65,7 @@ export function EarlyAccess() {
               </div>
               <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/20">
                 <motion.div
-                  className="h-full rounded-full bg-white"
+                  className="gold-fill h-full rounded-full"
                   animate={{ width: `${(claimed / SPOTS) * 100}%` }}
                   transition={{ duration: 0.4 }}
                 />
@@ -77,7 +77,7 @@ export function EarlyAccess() {
             <ul className="space-y-4">
               {perks.map(({ icon: Icon, title, copy }) => (
                 <li key={title} className="flex items-start gap-4">
-                  <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white/15">
+                  <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white/15 text-gold-light">
                     <Icon className="size-5" strokeWidth={1.6} />
                   </span>
                   <div>
@@ -126,7 +126,7 @@ export function EarlyAccess() {
                       placeholder="your@email.com"
                       className="flex-1 rounded-full bg-white px-5 py-3.5 text-ink outline-none placeholder:text-ink/40"
                     />
-                    <Button type="submit">Get early access</Button>
+                    <Button type="submit" variant="gold">Get early access</Button>
                   </motion.form>
                 )}
               </AnimatePresence>

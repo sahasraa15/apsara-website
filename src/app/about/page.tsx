@@ -3,6 +3,7 @@ import { doshaInfo, type Dosha } from "@/lib/products";
 import { StoryCollage } from "@/components/about/StoryCollage";
 import { DoshaGlyph } from "@/components/shop/DoshaGlyph";
 import { Button } from "@/components/brand/Button";
+import { ValuesStack } from "@/components/about/ValuesStack";
 
 export const metadata: Metadata = {
   title: "About",
@@ -13,7 +14,7 @@ const order: Dosha[] = ["vata", "pitta", "kapha"];
 
 const values = [
   { title: "Proven, not trendy", copy: "We only use botanicals with centuries of use behind them and modern research to back them up." },
-  { title: "Fewer, better products", copy: "Six essentials that each do one job really well. No 12-step routines." },
+  { title: "Fewer, better products", copy: "Four essentials that each do one job really well. No 12-step routines." },
   { title: "Fairly sourced", copy: "We buy directly from growers and pay above market price for every harvest." },
 ];
 
@@ -60,7 +61,7 @@ export default function AboutPage() {
               Ayurveda is a 3,000-year-old wellness tradition from India. Its big idea for skin is simple: everyone has
               a natural type, and your routine should work with it instead of against it.
             </p>
-            <p className="mt-4">It describes three types, called doshas:</p>
+            <p className="mt-4">It describes three skin types:</p>
             <div className="mt-6 grid gap-3 sm:grid-cols-3">
               {order.map((d) => (
                 <div key={d} className="rounded-3xl bg-white p-5 ring-1 ring-ink/5">
@@ -71,22 +72,15 @@ export default function AboutPage() {
               ))}
             </div>
             <Button href="/quiz" className="mt-8">
-              Find yours in 60 seconds
+              Find yours in 2 minutes
             </Button>
           </div>
         </div>
       </section>
 
-      <section className="bg-petal/60">
-        <div className="mx-auto grid max-w-[1400px] gap-4 px-5 py-20 md:grid-cols-3 md:gap-6 md:px-10 md:py-24">
-          {values.map((v, i) => (
-            <div key={v.title} className="rounded-3xl bg-white p-8">
-              <span className="text-sm font-medium text-magenta">0{i + 1}</span>
-              <h3 className="mt-4 font-display text-3xl">{v.title}</h3>
-              <p className="mt-3 text-ink/65">{v.copy}</p>
-            </div>
-          ))}
-        </div>
+      <section className="mx-auto max-w-[1400px] px-5 pb-24 md:px-10">
+        <p className="eyebrow text-gold-deep">What we stand for</p>
+        <ValuesStack values={values} />
       </section>
 
       <section id="contact" className="scroll-mt-24 mx-auto grid max-w-[1400px] gap-12 px-5 py-20 md:px-10 md:py-28 lg:grid-cols-2">

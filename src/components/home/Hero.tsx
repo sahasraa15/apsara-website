@@ -11,17 +11,16 @@ import { Stars } from "@/components/shop/Stars";
 const ease = [0.22, 1, 0.36, 1] as const;
 
 const group = [
-  { id: "kajal-liner", h: "62%", left: "6%", depth: 10 },
-  { id: "lotus-serum", h: "72%", left: "22%", depth: 22 },
-  { id: "kumkumadi-oil", h: "88%", left: "40%", depth: 34 },
-  { id: "haldi-mask", h: "34%", left: "62%", depth: 18 },
-  { id: "beetroot-tint", h: "40%", left: "76%", depth: 26 },
+  { id: "neem-cleanser", h: "70%", left: "6%", depth: 12 },
+  { id: "lotus-serum", h: "72%", left: "25%", depth: 22 },
+  { id: "kumkumadi-oil", h: "88%", left: "46%", depth: 34 },
+  { id: "haldi-mask", h: "36%", left: "68%", depth: 18 },
 ];
 
 const chips = [
   { label: "Saffron", note: "evens tone", className: "left-[2%] top-[16%]", delay: 0 },
   { label: "Neem", note: "clears pores", className: "right-[0%] top-[30%]", delay: 1.2 },
-  { label: "Pink lotus", note: "calms redness", className: "left-[8%] bottom-[10%]", delay: 0.6 },
+  { label: "Pink lotus", note: "calms redness", className: "left-[12%] bottom-[2%]", delay: 0.6 },
 ];
 
 function Piece({
@@ -85,8 +84,8 @@ export function Hero() {
             transition={{ duration: 0.7, ease }}
             className="inline-flex items-center gap-2 rounded-full bg-white/80 px-3.5 py-1.5 text-xs font-medium text-ink shadow-sm"
           >
-            <span className="size-1.5 rounded-full bg-magenta" />
-            Ayurvedic skincare &amp; makeup
+            <span className="size-1.5 rounded-full bg-forest" />
+            Ayurvedic skincare
           </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 24 }}

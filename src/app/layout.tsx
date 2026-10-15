@@ -22,11 +22,11 @@ const body = Outfit({
 
 export const metadata: Metadata = {
   title: {
-    default: "Apsara & Co. — Modern Ayurvedic Skincare & Makeup",
+    default: "Apsara & Co. — Modern Ayurvedic Skincare",
     template: "%s · Apsara & Co.",
   },
   description:
-    "Modern Ayurvedic skincare and makeup. Time-tested botanicals, clean formulas, dermatologist tested.",
+    "Modern Ayurvedic skincare. Time-tested botanicals, clean formulas, dermatologist tested.",
   openGraph: {
     title: "Apsara & Co.",
     description: "Modern Ayurveda for everyday skin.",

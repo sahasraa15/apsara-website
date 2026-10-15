@@ -7,8 +7,6 @@ const columns = [
     title: "Shop",
     links: [
       { href: "/shop", label: "All products" },
-      { href: "/shop?line=Skincare", label: "Skincare" },
-      { href: "/shop?line=Makeup", label: "Makeup" },
       { href: "/quiz", label: "Skin quiz" },
     ],
   },
@@ -35,11 +33,11 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-[1400px] gap-12 px-5 py-16 md:grid-cols-12 md:px-10">
         <div className="md:col-span-4">
           <Link href="/" className="flex items-center gap-3 text-white">
-            <LotusMark className="h-12 w-10 text-white" />
-            <Wordmark size="md" showCo />
+            <LotusMark className="h-12 w-10 text-gold-light" />
+            <Wordmark size="md" showCo className="text-gold-light" />
           </Link>
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-white/65">
-            Modern Ayurvedic skincare and makeup. Clean, vegan, cruelty-free and dermatologist tested.
+            Modern Ayurvedic skincare. Clean, vegan, cruelty-free and dermatologist tested.
           </p>
         </div>
 
@@ -64,7 +62,8 @@ export function SiteFooter() {
         </div>
       </div>
 
-      <div className="border-t border-white/10 px-5 py-5 text-center text-xs text-white/45 md:px-10">
+      <div className="gold-hairline opacity-40" />
+      <div className="px-5 py-5 text-center text-xs text-white/45 md:px-10">
         © {new Date().getFullYear()} Apsara &amp; Co. · Prototype
       </div>
     </footer>

@@ -6,11 +6,9 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Check, ChevronDown, Minus, Plus, RotateCcw, Truck } from "lucide-react";
 import { formatPrice, ingredientsFor, type Product } from "@/lib/products";
 import { useCart } from "@/lib/cart";
-import { mixHex, tintLevels } from "@/lib/tint";
 import { Vessel, vesselHeight } from "@/components/brand/Vessel";
 import { Button } from "@/components/brand/Button";
 import { Stars } from "./Stars";
-import { cn } from "@/lib/utils";
 
 function Accordion({ title, children, defaultOpen = false }: { title: string; children: ReactNode; defaultOpen?: boolean }) {
   return (
@@ -28,8 +26,6 @@ export function ProductDetail({ product }: { product: Product }) {
   const { add } = useCart();
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
-  const [shade, setShade] = useState(1);
-  const isTint = product.id === "beetroot-tint";
   const keyIngredients = ingredientsFor(product.id);
 
   const rx = useMotionValue(0);
@@ -51,17 +47,11 @@ export function ProductDetail({ product }: { product: Product }) {
     rx.set(-((e.clientY - r.top) / r.height - 0.5) * 24);
   };
 
-  const shadeFill = isTint ? mixHex("#f08fb0", "#5e0624", shade / (tintLevels.length - 1)) : undefined;
-
   return (
     <section className="mx-auto max-w-[1400px] px-5 pb-20 pt-6 md:px-10 md:pb-28 md:pt-10">
       <nav aria-label="Breadcrumb" className="text-sm text-ink/55">
         <Link href="/shop" className="hover:text-ink">
           Shop
-        </Link>
-        <span className="mx-2">/</span>
-        <Link href={`/shop?line=${product.line}`} className="hover:text-ink">
-          {product.line}
         </Link>
         <span className="mx-2">/</span>
         <span className="text-ink">{product.short}</span>
@@ -86,7 +76,6 @@ export function ProductDetail({ product }: { product: Product }) {
               <div className="flex w-full items-end justify-center" style={{ height: vesselHeight[product.vessel] }}>
                 <Vessel
                   product={product}
-                  fillOverride={shadeFill}
                   className="drop-shadow-[0_40px_40px_rgba(77,8,33,0.2)]"
                 />
               </div>
@@ -103,7 +92,7 @@ export function ProductDetail({ product }: { product: Product }) {
               <span
                 className="mx-auto h-16 w-28 rounded-[50%] md:h-20 md:w-36"
                 style={{
-                  background: `radial-gradient(ellipse at 35% 35%, #ffffffcc, ${shadeFill ?? product.fill} 55%)`,
+                  background: `radial-gradient(ellipse at 35% 35%, #ffffffcc, ${product.fill} 55%)`,
                   boxShadow: `0 10px 30px ${product.fill}55`,
                 }}
               />
@@ -147,31 +136,6 @@ export function ProductDetail({ product }: { product: Product }) {
             ))}
           </ul>
 
-          {isTint && (
-            <div className="mt-8">
-              <p className="text-sm">
-                Intensity: <span className="font-medium">{tintLevels[shade].name}</span>
-              </p>
-              <div className="mt-3 flex gap-3">
-                {tintLevels.map((l, i) => (
-                  <button
-                    key={l.name}
-                    type="button"
-                    aria-label={l.name}
-                    aria-pressed={shade === i}
-                    onClick={() => setShade(i)}
-                    className={cn(
-                      "size-10 rounded-full ring-2 ring-offset-2 ring-offset-blush transition-transform hover:scale-110",
-                      shade === i ? "ring-ink" : "ring-transparent"
-                    )}
-                    style={{ background: mixHex("#f08fb0", "#5e0624", i / (tintLevels.length - 1)) }}
-                  />
-                ))}
-              </div>
-              <p className="mt-2 text-xs text-ink/55">{tintLevels[shade].note}</p>
-            </div>
-          )}
-
           <div className="mt-8 flex gap-3">
             <div className="flex items-center rounded-full ring-1 ring-ink/15">
               <button type="button" aria-label="Decrease quantity" onClick={() => setQty((q) => Math.max(1, q - 1))} className="p-3.5">
@@ -189,8 +153,6 @@ export function ProductDetail({ product }: { product: Product }) {
                 add(product.id, {
                   qty,
                   from: e.currentTarget as HTMLElement,
-                  shade: isTint ? tintLevels[shade].name : undefined,
-                  color: shadeFill ?? product.glass,
                 });
                 setAdded(true);
                 setTimeout(() => setAdded(false), 1800);

@@ -1,9 +1,11 @@
 import { Hero } from "@/components/home/Hero";
+import { Decoded } from "@/components/home/Decoded";
+import { Statement } from "@/components/home/Statement";
 import { TrustBar } from "@/components/home/TrustBar";
+import { Ritual } from "@/components/home/Ritual";
 import { Bestsellers } from "@/components/home/Bestsellers";
-import { TryOn } from "@/components/home/TryOn";
+import { Stats } from "@/components/home/Stats";
 import { QuizTeaser } from "@/components/home/QuizTeaser";
-import { IngredientsTeaser } from "@/components/home/IngredientsTeaser";
 import { Reviews } from "@/components/home/Reviews";
 import { EarlyAccess } from "@/components/home/EarlyAccess";
 
@@ -11,11 +13,13 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <Decoded />
+      <Statement />
       <TrustBar />
+      <Ritual />
       <Bestsellers />
-      <TryOn />
+      <Stats />
       <QuizTeaser />
-      <IngredientsTeaser />
       <Reviews />
       <EarlyAccess />
     </>
