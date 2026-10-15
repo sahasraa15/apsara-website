@@ -5,6 +5,7 @@ import { AnimatePresence, animate, motion, useInView } from "framer-motion";
 import { Check, Gift, Sparkles, Tag } from "lucide-react";
 import { Reveal } from "@/components/brand/Reveal";
 import { Button } from "@/components/brand/Button";
+import { ScratchReveal } from "@/components/brand/ScratchReveal";
 
 const CLAIMED = 847;
 const SPOTS = 1200;
@@ -91,18 +92,18 @@ export function EarlyAccess() {
             <div className="mt-8">
               <AnimatePresence mode="wait">
                 {member ? (
-                  <motion.div
-                    key="done"
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="flex items-center gap-4 rounded-2xl bg-white p-5 text-ink"
-                  >
-                    <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-forest text-white">
-                      <Check className="size-5" />
-                    </span>
-                    <div>
-                      <p className="font-medium">You&apos;re #{member} on the list.</p>
-                      <p className="text-sm text-ink/60">Check your inbox for your early access link.</p>
+                  <motion.div key="done" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+                    <div className="flex items-center gap-3">
+                      <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-white text-forest">
+                        <Check className="size-4" />
+                      </span>
+                      <div>
+                        <p className="font-medium">You&apos;re #{member} on the list.</p>
+                        <p className="text-sm text-white/70">A little thank-you: scratch the gold for your launch discount.</p>
+                      </div>
+                    </div>
+                    <div className="mt-5">
+                      <ScratchReveal code="GLOW15" label="15% off your first order" />
                     </div>
                   </motion.div>
                 ) : (

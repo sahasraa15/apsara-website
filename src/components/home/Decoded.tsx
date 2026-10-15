@@ -110,7 +110,7 @@ export function Decoded() {
   const dropTop = useTransform(scrollYProgress, [0.5, 0.6], ["30%", "86%"]);
   const dropOpacity = useTransform(scrollYProgress, [0.5, 0.52, 0.59, 0.61], [0, 1, 1, 0]);
   const finale = useTransform(scrollYProgress, [0.72, 0.88], [0, 1]);
-  const bg = useTransform(scrollYProgress, [0, 0.5, 1], ["#fff6f8", "#fdeee4", "#fbe7c8"]);
+  const bg = useTransform(scrollYProgress, [0, 0.5, 1], ["rgba(252, 232, 238, 0)", "#fdeee4", "#fbe7c8"]);
 
   return (
     <section ref={ref} className="relative h-[420vh]">

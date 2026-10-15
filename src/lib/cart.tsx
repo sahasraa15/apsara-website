@@ -20,6 +20,8 @@ export type CartLine = {
   bundle?: string;
 };
 
+export type Gift = { wrap: string; occasion: string; note: string; hidePrices: boolean };
+
 type AddOptions = {
   bundle?: string;
   price?: number;
@@ -38,11 +40,14 @@ type CartContextValue = {
   setQty: (key: string, qty: number) => void;
   clear: () => void;
   bump: number;
+  gift: Gift | null;
+  setGift: (gift: Gift | null) => void;
 };
 
 const CartContext = createContext<CartContextValue | null>(null);
 
 const STORAGE_KEY = "apsara-bag-v1";
+const GIFT_KEY = "apsara-gift-v1";
 
 type Flight = { id: number; x: number; y: number; tx: number; ty: number; color: string };
 
@@ -52,12 +57,15 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [bump, setBump] = useState(0);
   const [flights, setFlights] = useState<Flight[]>([]);
   const [hydrated, setHydrated] = useState(false);
+  const [gift, setGift] = useState<Gift | null>(null);
 
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       // eslint-disable-next-line react-hooks/set-state-in-effect -- hydrate from storage once on mount
       if (raw) setLines((JSON.parse(raw) as CartLine[]).filter((l) => productById[l.id]));
+      const rawGift = localStorage.getItem(GIFT_KEY);
+      if (rawGift) setGift(JSON.parse(rawGift) as Gift);
     } catch {}
     setHydrated(true);
   }, []);
@@ -65,6 +73,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (hydrated) localStorage.setItem(STORAGE_KEY, JSON.stringify(lines));
   }, [lines, hydrated]);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    if (gift) localStorage.setItem(GIFT_KEY, JSON.stringify(gift));
+    else localStorage.removeItem(GIFT_KEY);
+  }, [gift, hydrated]);
 
   const add = useCallback((id: string, options: AddOptions = {}) => {
     const product = productById[id];
@@ -117,13 +131,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
     );
   }, []);
 
-  const clear = useCallback(() => setLines([]), []);
+  const clear = useCallback(() => {
+    setLines([]);
+    setGift(null);
+  }, []);
 
   const value = useMemo<CartContextValue>(() => {
     const count = lines.reduce((n, l) => n + l.qty, 0);
     const subtotal = lines.reduce((n, l) => n + l.qty * l.price, 0);
-    return { lines, count, subtotal, open, setOpen, add, setQty, clear, bump };
-  }, [lines, open, add, setQty, clear, bump]);
+    return { lines, count, subtotal, open, setOpen, add, setQty, clear, bump, gift, setGift };
+  }, [lines, open, add, setQty, clear, bump, gift]);
 
   return (
     <CartContext.Provider value={value}>

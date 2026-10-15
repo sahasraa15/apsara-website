@@ -87,8 +87,8 @@ export const questions: Question[] = [
     id: "concerns",
     section: "Your goals",
     prompt: "What would you most like to change?",
-    help: "Pick up to two.",
-    max: 2,
+    help: "Pick as many as you like.",
+    max: 7,
     options: [
       { label: "Dullness", hint: "Skin looks tired", concern: "dullness", weights: { kapha: 1 } },
       { label: "Redness", hint: "Flushing or irritation", concern: "redness", weights: { pitta: 1 } },
@@ -244,9 +244,12 @@ export function scoreQuiz(answers: Record<string, number[]>): QuizResult {
   let size: RoutineSize = 3;
 
   for (const q of questions) {
-    for (const i of answers[q.id] ?? []) {
+    const picked = answers[q.id] ?? [];
+    // Picking many options shouldn't outweigh the rest of the quiz
+    const share = Math.min(1, 2 / (picked.length || 1));
+    for (const i of picked) {
       const o = q.options[i];
-      for (const [d, w] of Object.entries(o.weights ?? {}) as [Dosha, number][]) totals[d] += w;
+      for (const [d, w] of Object.entries(o.weights ?? {}) as [Dosha, number][]) totals[d] += w * share;
       if (o.concern) concerns.push(o.concern);
       if (o.climate) climate = o.climate;
       if (o.sensitivity) sensitivity = o.sensitivity;
@@ -269,7 +272,8 @@ export function scoreQuiz(answers: Record<string, number[]>): QuizResult {
   const score = (id: string) => {
     const f = fit[id];
     let s = (f.dosha[primary] ?? 0) * 2 + (secondary ? f.dosha[secondary] ?? 0 : 0);
-    for (const c of concerns) s += (f.concern[c] ?? 0) * 2;
+    const perConcern = 2 * Math.min(1, 2 / (concerns.length || 1));
+    for (const c of concerns) s += (f.concern[c] ?? 0) * perConcern;
     if (sensitivity === "high") s += f.sensitive * 2;
     return s;
   };

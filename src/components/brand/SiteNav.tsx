@@ -14,6 +14,8 @@ const links = [
   { href: "/shop", label: "Shop" },
   { href: "/quiz", label: "Skin Quiz" },
   { href: "/ingredients", label: "Ingredients" },
+  { href: "/glow-room", label: "Glow Room" },
+  { href: "/rewards", label: "Rewards" },
   { href: "/about", label: "About" },
 ];
 
@@ -98,6 +100,7 @@ export function SiteNav() {
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.25 }}
             className="lotus-bg fixed inset-0 z-40 lg:hidden"
+            style={{ backgroundColor: "var(--blush)" }}
           >
             <nav className="flex flex-col gap-1 px-5 pt-28">
               {[{ href: "/", label: "Home" }, ...links].map((link, i) => (

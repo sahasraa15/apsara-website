@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { IngredientPanels } from "@/components/ingredients/IngredientPanels";
+import { GrowMap } from "@/components/ingredients/GrowMap";
 
 export const metadata: Metadata = {
   title: "Ingredients",
@@ -20,7 +21,7 @@ const neverList = [
 export default function IngredientsPage() {
   return (
     <>
-      <section className="lotus-bg -mt-16 pt-16 md:-mt-[72px] md:pt-[72px]">
+      <section className="lotus-wash -mt-16 pt-16 md:-mt-[72px] md:pt-[72px]">
         <div className="mx-auto max-w-[1400px] px-5 pb-16 pt-10 md:px-10 md:pt-16">
           <p className="eyebrow text-magenta">Ingredients</p>
           <h1 className="mt-3 max-w-3xl font-display text-[clamp(3rem,7vw,5.5rem)] leading-none">
@@ -42,6 +43,19 @@ export default function IngredientsPage() {
           </p>
         </div>
         <IngredientPanels />
+      </section>
+
+      <section className="mx-auto max-w-[1400px] px-5 pb-16 md:px-10 md:pb-24">
+        <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <h2 className="font-display text-4xl md:text-6xl">Where it grows.</h2>
+            <p className="mt-3 max-w-xl text-ink/65">
+              Every botanical comes from the region of India that grows it best.
+            </p>
+          </div>
+          <p className="text-sm text-ink/55">Tap a pin to visit the farm.</p>
+        </div>
+        <GrowMap />
       </section>
 
       <section className="bg-forest text-white">

@@ -193,7 +193,7 @@ export function Quiz() {
                     Continue <ArrowRight className="size-4" />
                   </Button>
                   <span className="text-sm text-ink/55">
-                    {picked.length}/{q.max} selected
+                    {picked.length} selected
                   </span>
                 </div>
               )}

@@ -8,12 +8,15 @@ const columns = [
     links: [
       { href: "/shop", label: "All products" },
       { href: "/quiz", label: "Skin quiz" },
+      { href: "/shop#discovery-kit", label: "Discovery Kit" },
+      { href: "/rewards", label: "Gold Leaf rewards" },
     ],
   },
   {
     title: "Learn",
     links: [
       { href: "/ingredients", label: "Ingredients" },
+      { href: "/glow-room", label: "The Glow Room" },
       { href: "/about", label: "Our story" },
       { href: "/about#ayurveda", label: "What is Ayurveda?" },
     ],

@@ -3,14 +3,22 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Check, Minus, Plus, ShoppingBag, X } from "lucide-react";
+import { Check, Minus, Plus, ShoppingBag, Sparkles, X } from "lucide-react";
 import { useCart } from "@/lib/cart";
-import { FREE_GIFT_THRESHOLD, formatPrice, productById } from "@/lib/products";
+import {
+  FREE_GIFT_THRESHOLD,
+  POINTS_PER_DOLLAR,
+  discoveryKit,
+  formatPrice,
+  productById,
+  products,
+} from "@/lib/products";
+import { GiftOptions, giftFee } from "./GiftOptions";
 import { Vessel } from "./Vessel";
 import { Button } from "./Button";
 
 export function CartDrawer() {
-  const { lines, open, setOpen, subtotal, setQty, clear, count } = useCart();
+  const { lines, open, setOpen, subtotal, setQty, clear, count, gift } = useCart();
   const [reserved, setReserved] = useState(false);
 
   useEffect(() => {
@@ -25,6 +33,8 @@ export function CartDrawer() {
 
   const remaining = Math.max(0, FREE_GIFT_THRESHOLD - subtotal);
   const progress = Math.min(1, subtotal / FREE_GIFT_THRESHOLD);
+  const wrapFee = giftFee(subtotal, !!gift);
+  const points = Math.floor(subtotal * POINTS_PER_DOLLAR);
 
   return (
     <AnimatePresence>
@@ -115,7 +125,8 @@ export function CartDrawer() {
                   </div>
                 </div>
 
-                <ul className="flex-1 space-y-1 overflow-y-auto px-4 py-4">
+                <div className="flex-1 overflow-y-auto px-4 py-4">
+                <ul className="space-y-1">
                   <AnimatePresence initial={false}>
                     {lines.map((line) => {
                       const p = productById[line.id];
@@ -130,12 +141,20 @@ export function CartDrawer() {
                           className="flex items-center gap-4 rounded-xl p-2"
                         >
                           <Link
-                            href={`/shop/${p.id}`}
+                            href={p.id === discoveryKit.id ? "/shop#discovery-kit" : `/shop/${p.id}`}
                             onClick={() => setOpen(false)}
-                            className="flex h-20 w-16 shrink-0 items-center justify-center rounded-lg p-1.5"
+                            className="flex h-20 w-16 shrink-0 items-end justify-center gap-px rounded-lg p-1.5"
                             style={{ background: p.tint }}
                           >
-                            <Vessel product={p} />
+                            {p.id === discoveryKit.id ? (
+                              products.map((m) => (
+                                <span key={m.id} className="h-9">
+                                  <Vessel product={m} />
+                                </span>
+                              ))
+                            ) : (
+                              <Vessel product={p} />
+                            )}
                           </Link>
                           <div className="min-w-0 flex-1">
                             <p className="font-medium leading-tight">{p.name}</p>
@@ -169,12 +188,28 @@ export function CartDrawer() {
                     })}
                   </AnimatePresence>
                 </ul>
+                <GiftOptions />
+                </div>
 
                 <footer className="border-t border-ink/10 px-6 py-5">
+                  {gift && (
+                    <div className="mb-1 flex justify-between text-sm text-ink/60">
+                      <span>Gift wrap</span>
+                      <span>{wrapFee ? formatPrice(wrapFee) : "Free"}</span>
+                    </div>
+                  )}
                   <div className="flex items-baseline justify-between">
                     <span className="text-ink/60">Subtotal</span>
-                    <span className="font-display text-3xl">{formatPrice(subtotal)}</span>
+                    <span className="font-display text-3xl">{formatPrice(subtotal + wrapFee)}</span>
                   </div>
+                  <Link
+                    href="/rewards"
+                    onClick={() => setOpen(false)}
+                    className="mt-2 flex items-center gap-1.5 text-xs text-gold-deep hover:underline"
+                  >
+                    <Sparkles className="size-3.5" />
+                    You&apos;ll earn {points} Gold Leaf points with this order
+                  </Link>
                   <p className="mt-1 text-xs text-ink/50">
                     Ships this spring. You won&apos;t be charged until launch.
                   </p>

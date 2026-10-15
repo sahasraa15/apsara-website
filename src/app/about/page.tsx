@@ -27,7 +27,7 @@ const faqs = [
 export default function AboutPage() {
   return (
     <>
-      <section className="lotus-bg -mt-16 overflow-hidden pt-16 md:-mt-[72px] md:pt-[72px]">
+      <section className="lotus-wash -mt-16 overflow-x-clip pt-16 md:-mt-[72px] md:pt-[72px]">
         <div className="mx-auto grid max-w-[1400px] items-center gap-14 px-5 pb-20 pt-10 md:px-10 md:pt-16 lg:grid-cols-2">
           <div>
             <p className="eyebrow text-magenta">Our story</p>

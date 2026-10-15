@@ -1,14 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { useState, type PointerEvent, type ReactNode } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { Check, ChevronDown, Minus, Plus, RotateCcw, Truck } from "lucide-react";
+import { useState, type ReactNode } from "react";
+import { Check, ChevronDown, Minus, Plus, RefreshCw, RotateCcw, Truck } from "lucide-react";
 import { formatPrice, ingredientsFor, type Product } from "@/lib/products";
 import { useCart } from "@/lib/cart";
-import { Vessel, vesselHeight } from "@/components/brand/Vessel";
 import { Button } from "@/components/brand/Button";
 import { Stars } from "./Stars";
+import { ProductFacts } from "./ProductFacts";
+import { ProductStage } from "./ProductStage";
+import { lasts } from "@/lib/productDetails";
+import { cn } from "@/lib/utils";
+
+const SUBSCRIBE_DISCOUNT = 0.1;
 
 function Accordion({ title, children, defaultOpen = false }: { title: string; children: ReactNode; defaultOpen?: boolean }) {
   return (
@@ -26,26 +30,10 @@ export function ProductDetail({ product }: { product: Product }) {
   const { add } = useCart();
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
+  const [subscribe, setSubscribe] = useState(false);
+  const every = lasts[product.id].weeks;
+  const unit = subscribe ? Math.round(product.price * (1 - SUBSCRIBE_DISCOUNT) * 100) / 100 : product.price;
   const keyIngredients = ingredientsFor(product.id);
-
-  const rx = useMotionValue(0);
-  const ry = useMotionValue(0);
-  const srx = useSpring(rx, { stiffness: 120, damping: 14 });
-  const sry = useSpring(ry, { stiffness: 120, damping: 14 });
-  const glare = useTransform(
-    sry,
-    [-18, 18],
-    [
-      "radial-gradient(circle at 25% 30%, rgba(255,255,255,0.45), transparent 45%)",
-      "radial-gradient(circle at 75% 30%, rgba(255,255,255,0.45), transparent 45%)",
-    ]
-  );
-
-  const onMove = (e: PointerEvent<HTMLDivElement>) => {
-    const r = e.currentTarget.getBoundingClientRect();
-    ry.set(((e.clientX - r.left) / r.width - 0.5) * 36);
-    rx.set(-((e.clientY - r.top) / r.height - 0.5) * 24);
-  };
 
   return (
     <section className="mx-auto max-w-[1400px] px-5 pb-20 pt-6 md:px-10 md:pb-28 md:pt-10">
@@ -59,58 +47,10 @@ export function ProductDetail({ product }: { product: Product }) {
 
       <div className="mt-6 grid gap-10 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
         <div>
-          <div
-            className="relative aspect-square overflow-hidden rounded-[2rem]"
-            style={{ background: `radial-gradient(circle at 50% 40%, #ffffff 0%, ${product.tint} 75%)`, perspective: 900 }}
-            onPointerMove={onMove}
-            onPointerLeave={() => {
-              rx.set(0);
-              ry.set(0);
-            }}
-            data-cursor="Tilt"
-          >
-            <motion.div
-              className="absolute inset-[14%] flex items-end justify-center"
-              style={{ rotateX: srx, rotateY: sry, transformStyle: "preserve-3d" }}
-            >
-              <div className="flex w-full items-end justify-center" style={{ height: vesselHeight[product.vessel] }}>
-                <Vessel
-                  product={product}
-                  className="drop-shadow-[0_40px_40px_rgba(77,8,33,0.2)]"
-                />
-              </div>
-              <motion.div className="pointer-events-none absolute inset-0 mix-blend-overlay" style={{ background: glare }} />
-            </motion.div>
-            <p className="absolute bottom-5 left-1/2 -translate-x-1/2 rounded-full bg-white/80 px-3 py-1 text-xs text-ink/60 backdrop-blur">
-              Move your cursor to tilt
-            </p>
-          </div>
+          <ProductStage product={product} />
 
-          <div className="mt-4 grid grid-cols-2 gap-4">
-            <div className="flex aspect-[4/3] flex-col justify-between rounded-3xl bg-white p-5 ring-1 ring-ink/5">
-              <p className="text-xs font-medium text-ink/55">Texture</p>
-              <span
-                className="mx-auto h-16 w-28 rounded-[50%] md:h-20 md:w-36"
-                style={{
-                  background: `radial-gradient(ellipse at 35% 35%, #ffffffcc, ${product.fill} 55%)`,
-                  boxShadow: `0 10px 30px ${product.fill}55`,
-                }}
-              />
-              <p className="text-sm">{product.size}</p>
-            </div>
-            <div className="flex aspect-[4/3] flex-col justify-between rounded-3xl bg-white p-5 ring-1 ring-ink/5">
-              <p className="text-xs font-medium text-ink/55">Hero ingredients</p>
-              <div className="flex -space-x-3">
-                {keyIngredients.map((ing) => (
-                  <span
-                    key={ing.id}
-                    className="size-12 rounded-full ring-4 ring-white md:size-14"
-                    style={{ background: `radial-gradient(circle at 35% 30%, #ffffff, ${ing.color} 75%)` }}
-                  />
-                ))}
-              </div>
-              <p className="text-sm">{product.notes.join(" · ")}</p>
-            </div>
+          <div className="mt-4">
+            <ProductFacts product={product} />
           </div>
         </div>
 
@@ -136,7 +76,49 @@ export function ProductDetail({ product }: { product: Product }) {
             ))}
           </ul>
 
-          <div className="mt-8 flex gap-3">
+          <div className="mt-8 grid gap-2 sm:grid-cols-2">
+            {[
+              { on: false, title: "One-time", copy: formatPrice(product.price) },
+              {
+                on: true,
+                title: "Subscribe & save 10%",
+                copy: `${formatPrice(Math.round(product.price * (1 - SUBSCRIBE_DISCOUNT) * 100) / 100)} · every ${every} weeks`,
+              },
+            ].map((o) => (
+              <button
+                key={o.title}
+                type="button"
+                onClick={() => setSubscribe(o.on)}
+                className={cn(
+                  "flex items-start gap-3 rounded-2xl p-4 text-left ring-1 transition",
+                  subscribe === o.on ? "bg-petal ring-magenta/40" : "ring-ink/10 hover:ring-ink/25"
+                )}
+              >
+                <span
+                  className={cn(
+                    "mt-0.5 grid size-5 shrink-0 place-items-center rounded-full",
+                    subscribe === o.on ? "bg-magenta text-white" : "ring-1 ring-ink/25"
+                  )}
+                >
+                  {subscribe === o.on && <Check className="size-3" />}
+                </span>
+                <span>
+                  <span className="flex items-center gap-1.5 text-sm font-medium">
+                    {o.on && <RefreshCw className="size-3.5 text-forest" />}
+                    {o.title}
+                  </span>
+                  <span className="mt-0.5 block text-xs text-ink/60">{o.copy}</span>
+                </span>
+              </button>
+            ))}
+          </div>
+          {subscribe && (
+            <p className="mt-2 text-xs text-ink/55">
+              Timed to arrive right before you run out. Skip, pause or cancel anytime.
+            </p>
+          )}
+
+          <div className="mt-4 flex gap-3">
             <div className="flex items-center rounded-full ring-1 ring-ink/15">
               <button type="button" aria-label="Decrease quantity" onClick={() => setQty((q) => Math.max(1, q - 1))} className="p-3.5">
                 <Minus className="size-4" />
@@ -152,13 +134,15 @@ export function ProductDetail({ product }: { product: Product }) {
               onClick={(e) => {
                 add(product.id, {
                   qty,
+                  price: unit,
+                  bundle: subscribe ? `Every ${every} weeks · 10% off` : undefined,
                   from: e.currentTarget as HTMLElement,
                 });
                 setAdded(true);
                 setTimeout(() => setAdded(false), 1800);
               }}
             >
-              {added ? "Added to bag ✓" : `Add to bag · ${formatPrice(product.price * qty)}`}
+              {added ? "Added to bag ✓" : `Add to bag · ${formatPrice(Math.round(unit * qty * 100) / 100)}`}
             </Button>
           </div>
 

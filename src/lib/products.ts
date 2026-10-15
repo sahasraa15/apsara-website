@@ -4,7 +4,7 @@ export type Product = {
   id: string;
   name: string;
   short: string;
-  category: "Serum" | "Face oil" | "Cleanser" | "Mask";
+  category: "Serum" | "Face oil" | "Cleanser" | "Mask" | "Kit";
   price: number;
   size: string;
   /** Which Ayurvedic skin type it's built for */
@@ -116,8 +116,30 @@ export const products: Product[] = [
   },
 ];
 
+/** Sold from the shop page only, so it stays out of `products` (grids, quiz, routines) */
+export const discoveryKit: Product = {
+  id: "discovery-kit",
+  name: "The Discovery Kit",
+  short: "Discovery Kit",
+  category: "Kit",
+  price: 28,
+  size: "4 travel minis",
+  dosha: "Good for every skin type",
+  tagline: "Try all four",
+  blurb: "Travel minis of every product, about two weeks of each. The full $28 comes off your first full-size order.",
+  benefits: ["All four essentials", "About two weeks of each", "$28 credit toward full size"],
+  ritual: "Use them like the full sizes. Keep the pouch for travel.",
+  notes: ["Lotus", "Saffron", "Neem", "Turmeric"],
+  vessel: "jar",
+  glass: "#e0507e",
+  fill: "#f3bfd0",
+  tint: "#fae3ea",
+  rating: 4.9,
+  reviews: 0,
+};
+
 export const productById = Object.fromEntries(
-  products.map((p) => [p.id, p])
+  [...products, discoveryKit].map((p) => [p.id, p])
 ) as Record<string, Product>;
 
 export type Ingredient = {
@@ -194,28 +216,23 @@ export const doshaInfo: Record<Dosha, { name: string; plain: string; element: st
   kapha: { name: "Oily", plain: "Shine, pores, breakouts", element: "Earth" },
 };
 
-export const reviews = [
-  {
-    name: "Jess M.",
-    place: "Austin, TX",
-    product: "lotus-serum",
-    quote: "My redness is honestly half of what it was. I've repurchased twice and I never repurchase anything.",
-  },
-  {
-    name: "Priya K.",
-    place: "Jersey City, NJ",
-    product: "kumkumadi-oil",
-    quote: "My mom swore by kumkumadi. This is the first one that doesn't feel heavy—and the bottle is gorgeous.",
-  },
-  {
-    name: "Taylor R.",
-    place: "Portland, OR",
-    product: "haldi-mask",
-    quote: "Ten minutes on a Sunday and my skin looks like I went on vacation. And no, it doesn't stain.",
-  },
+/** Placeholder reviews until real ones come in */
+export const reviews: { name: string; place: string; skin: Dosha; product: string; quote: string }[] = [
+  { name: "Jess M.", place: "Austin, TX", skin: "pitta", product: "lotus-serum", quote: "My redness is honestly half of what it was. I've repurchased twice and I never repurchase anything." },
+  { name: "Priya K.", place: "Jersey City, NJ", skin: "vata", product: "kumkumadi-oil", quote: "My mom swore by kumkumadi. This is the first one that doesn't feel heavy, and the bottle is gorgeous." },
+  { name: "Taylor R.", place: "Portland, OR", skin: "kapha", product: "haldi-mask", quote: "Ten minutes on a Sunday and my skin looks like I went on vacation. And no, it doesn't stain." },
+  { name: "Aisha B.", place: "Houston, TX", skin: "kapha", product: "neem-cleanser", quote: "Finally a cleanser that clears my T-zone without that squeaky, tight feeling." },
+  { name: "Megan L.", place: "Denver, CO", skin: "vata", product: "lotus-serum", quote: "Dry Colorado air was wrecking my skin. This plus the oil at night fixed it in two weeks." },
+  { name: "Sana R.", place: "Chicago, IL", skin: "pitta", product: "neem-cleanser", quote: "So gentle. My sensitive skin didn't react at all, which is a first for anything with neem." },
+  { name: "Olivia T.", place: "Brooklyn, NY", skin: "vata", product: "haldi-mask", quote: "Leaves my skin soft, not stripped. I use it before every big event now." },
+  { name: "Riya P.", place: "Seattle, WA", skin: "pitta", product: "kumkumadi-oil", quote: "I was scared an oil would make me flush. It didn't. Just glow." },
+  { name: "Camila G.", place: "Miami, FL", skin: "kapha", product: "lotus-serum", quote: "Light enough for Miami humidity. Sits perfectly under sunscreen." },
 ];
 
 export const FREE_GIFT_THRESHOLD = 95;
+export const GIFT_WRAP_FEE = 5;
+/** Gold Leaf rewards: points per dollar spent */
+export const POINTS_PER_DOLLAR = 1;
 
 export const formatPrice = (n: number) =>
   `$${n % 1 === 0 ? n : n.toFixed(2)}`;

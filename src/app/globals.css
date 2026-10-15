@@ -72,12 +72,12 @@
   --rose: #e0507e;
   --lotus: #f3bfd0;
   --petal: #fae3ea;
-  --blush: #fff6f8;
+  --blush: #fce8ee;
   --gold: #b8893a;
   --gold-light: #e3c27c;
   --gold-deep: #8a6224;
 
-  --background: #fff6f8;
+  --background: #fce8ee;
   --foreground: #0a1c10;
   --card: #ffffff;
   --card-foreground: #0a1c10;
@@ -121,9 +121,59 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply text-foreground antialiased;
     font-family: var(--font-body), system-ui, sans-serif;
     overflow-x: clip;
+  }
+
+  /* Slowly drifting lotus gradient behind every page; body stays transparent so it shows through */
+  body::before,
+  body::after {
+    content: "";
+    position: fixed;
+    inset: -40%;
+    z-index: -1;
+    pointer-events: none;
+    will-change: transform;
+  }
+  body::before {
+    background:
+      radial-gradient(30% 28% at 22% 26%, #f2b3c7 0%, transparent 70%),
+      radial-gradient(26% 30% at 78% 18%, #f8c6d5 0%, transparent 70%),
+      radial-gradient(34% 30% at 70% 72%, #f4b8cb 0%, transparent 70%),
+      radial-gradient(28% 26% at 26% 78%, #fbd9cc 0%, transparent 70%);
+    animation: lotus-drift-a 18s ease-in-out infinite alternate;
+  }
+  body::after {
+    background:
+      radial-gradient(24% 22% at 50% 40%, #eea6bd 0%, transparent 70%),
+      radial-gradient(22% 24% at 36% 58%, #fde4ec 0%, transparent 70%),
+      radial-gradient(20% 22% at 64% 50%, #f3b6c9 0%, transparent 70%);
+    opacity: 0.7;
+    animation: lotus-drift-b 24s ease-in-out infinite alternate;
+  }
+
+  @keyframes lotus-drift-a {
+    0% {
+      transform: translate3d(-6%, -4%, 0) rotate(0deg) scale(1);
+    }
+    50% {
+      transform: translate3d(4%, 3%, 0) rotate(8deg) scale(1.06);
+    }
+    100% {
+      transform: translate3d(7%, -3%, 0) rotate(-6deg) scale(1);
+    }
+  }
+  @keyframes lotus-drift-b {
+    0% {
+      transform: translate3d(8%, 6%, 0) rotate(0deg);
+    }
+    50% {
+      transform: translate3d(-6%, 2%, 0) rotate(-10deg);
+    }
+    100% {
+      transform: translate3d(-3%, -7%, 0) rotate(6deg);
+    }
   }
 
   ::selection {
@@ -163,7 +213,12 @@
     background:
       radial-gradient(90% 70% at 85% 10%, #f6c3d3 0%, transparent 60%),
       radial-gradient(70% 60% at 0% 100%, #fbd9e3 0%, transparent 65%),
-      linear-gradient(180deg, #fde8ee 0%, #fff6f8 100%);
+      linear-gradient(180deg, rgb(253 232 238 / 0.55) 0%, transparent 100%);
+  }
+
+  /* Page headers: a soft extra glow at the top that lets the moving gradient show through */
+  .lotus-wash {
+    background: radial-gradient(60% 420px at 85% 0%, rgb(246 195 211 / 0.6) 0%, transparent 70%);
   }
 
   /* Polished gold-leaf text; position can be driven by scroll for a sheen */

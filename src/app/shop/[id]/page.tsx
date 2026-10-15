@@ -12,14 +12,14 @@ export function generateStaticParams() {
 export async function generateMetadata(props: PageProps<"/shop/[id]">): Promise<Metadata> {
   const { id } = await props.params;
   const product = productById[id];
-  if (!product) return {};
+  if (!product || !products.includes(product)) return {};
   return { title: product.name, description: product.blurb };
 }
 
 export default async function ProductPage(props: PageProps<"/shop/[id]">) {
   const { id } = await props.params;
   const product = productById[id];
-  if (!product) notFound();
+  if (!product || !products.includes(product)) notFound();
 
   const related = products
     .filter((p) => p.id !== product.id)

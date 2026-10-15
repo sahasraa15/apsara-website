@@ -5,6 +5,8 @@ import { cn } from "@/lib/utils";
 type VesselProps = {
   product: Pick<Product, "vessel" | "glass" | "fill" | "short">;
   className?: string;
+  /** Draws the back label (ingredient text and barcode) instead of the front */
+  side?: "front" | "back";
 };
 
 function Label({
@@ -14,6 +16,7 @@ function Label({
   h,
   name,
   small = false,
+  back = false,
 }: {
   x: number;
   y: number;
@@ -21,8 +24,46 @@ function Label({
   h: number;
   name: string;
   small?: boolean;
+  back?: boolean;
 }) {
   const cx = x + w / 2;
+  if (back) {
+    const pad = 7;
+    const rows = small ? 3 : Math.floor((h - 34) / 5);
+    return (
+      <g>
+        <rect x={x} y={y} width={w} height={h} rx={3} fill="#ffffff" opacity={0.95} />
+        <text
+          x={cx}
+          y={y + 10}
+          textAnchor="middle"
+          fill="#0c5029"
+          style={{ fontFamily: "var(--font-body), sans-serif", fontWeight: 500, letterSpacing: "0.2em" }}
+          fontSize={small ? 5 : 6}
+        >
+          INGREDIENTS
+        </text>
+        {Array.from({ length: rows }, (_, i) => (
+          <rect
+            key={i}
+            x={x + pad}
+            y={y + 15 + i * 5}
+            width={(w - pad * 2) * (i === rows - 1 ? 0.55 : 0.8 + ((i * 37) % 20) / 100)}
+            height={1.6}
+            rx={0.8}
+            fill="#0a1c10"
+            opacity={0.28}
+          />
+        ))}
+        <g transform={`translate(${x + pad} ${y + h - 12})`}>
+          {[0, 2, 3, 5, 8, 9, 11, 13, 14, 16, 19, 20, 22].map((bx, i) => (
+            <rect key={i} x={bx} y={0} width={i % 3 ? 1 : 1.6} height={7} fill="#0a1c10" opacity={0.7} />
+          ))}
+        </g>
+        <circle cx={x + w - pad - 4} cy={y + h - 8.5} r={4} fill="none" stroke="#b8893a" strokeWidth={0.8} />
+      </g>
+    );
+  }
   return (
     <g>
       <rect x={x} y={y} width={w} height={h} rx={3} fill="#ffffff" opacity={0.95} />
@@ -85,7 +126,8 @@ export const vesselHeight: Record<Product["vessel"], string> = {
   jar: "48%",
 };
 
-export function Vessel({ product, className }: VesselProps) {
+export function Vessel({ product, className, side = "front" }: VesselProps) {
+  const back = side === "back";
   const uid = useId().replace(/:/g, "");
   const ids = {
     glass: `glass-${uid}`,
@@ -142,7 +184,7 @@ export function Vessel({ product, className }: VesselProps) {
           <rect x={52} y={132} width={96} height={168} rx={20} fill={`url(#${ids.glass})`} />
           <rect x={58} y={170} width={84} height={124} rx={15} fill={`url(#${ids.fill})`} />
           <rect x={96} y={134} width={8} height={120} fill={fill} opacity={0.45} />
-          <Label x={62} y={196} w={76} h={74} name={product.short} />
+          <Label x={62} y={196} w={76} h={74} name={product.short} back={back} />
           <rect x={60} y={142} width={10} height={146} rx={5} fill={`url(#${ids.shine})`} opacity={0.6} />
         </>
       );
@@ -155,7 +197,7 @@ export function Vessel({ product, className }: VesselProps) {
           <circle cx={100} cy={61} r={8} fill="none" stroke="#5c3f12" strokeOpacity={0.5} />
           <path d="M86 98 H114 V118 C140 128 150 146 150 168 V286 C150 296 142 302 132 302 H68 C58 302 50 296 50 286 V168 C50 146 60 128 86 118 Z" fill={`url(#${ids.glass})`} />
           <path d="M56 176 C56 160 66 146 86 138 H114 C134 146 144 160 144 176 V284 C144 292 138 296 130 296 H70 C62 296 56 292 56 284 Z" fill={`url(#${ids.fill})`} />
-          <Label x={62} y={196} w={76} h={78} name={product.short} />
+          <Label x={62} y={196} w={76} h={78} name={product.short} back={back} />
           <rect x={58} y={150} width={10} height={140} rx={5} fill={`url(#${ids.shine})`} opacity={0.55} />
         </>
       );
@@ -166,7 +208,7 @@ export function Vessel({ product, className }: VesselProps) {
           <path d="M58 36 H142 L136 236 H64 Z" fill={`url(#${ids.glass})`} />
           <path d="M58 36 H142 V48 H58 Z" fill="#0b3019" opacity={0.6} />
           <path d="M60 40 H140" stroke={`url(#${ids.cap})`} strokeWidth={1.5} strokeDasharray="2 3" />
-          <Label x={70} y={92} w={60} h={104} name={product.short} />
+          <Label x={70} y={92} w={60} h={104} name={product.short} back={back} />
           <rect x={64} y={234} width={72} height={68} rx={6} fill={`url(#${ids.cap})`} />
           <path d="M64 252 H136 M64 284 H136" stroke="#5c3f12" strokeOpacity={0.45} />
           <rect x={68} y={56} width={8} height={170} rx={4} fill={`url(#${ids.shine})`} opacity={0.5} />
@@ -183,7 +225,7 @@ export function Vessel({ product, className }: VesselProps) {
           </g>
           <path d="M36 206 H164 V284 C164 294 156 302 146 302 H54 C44 302 36 294 36 284 Z" fill={`url(#${ids.glass})`} />
           <path d="M42 222 H158 V282 C158 290 152 296 144 296 H56 C48 296 42 290 42 282 Z" fill={`url(#${ids.fill})`} />
-          <Label x={64} y={222} w={72} h={62} name={product.short} small />
+          <Label x={64} y={222} w={72} h={62} name={product.short} small back={back} />
           <rect x={44} y={212} width={9} height={80} rx={4} fill={`url(#${ids.shine})`} opacity={0.55} />
         </>
       );
