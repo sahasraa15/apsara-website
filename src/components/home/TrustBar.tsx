@@ -9,7 +9,7 @@ const items = [
 
 export function TrustBar() {
   return (
-    <section className="border-y border-ink/10 bg-white/45">
+    <section className="border-y border-ink/10 bg-white">
       <div className="mx-auto grid max-w-[1400px] grid-cols-2 gap-6 px-5 py-8 md:grid-cols-4 md:px-10">
         {items.map(({ icon: Icon, title, copy }) => (
           <div key={title} className="flex items-start gap-3">

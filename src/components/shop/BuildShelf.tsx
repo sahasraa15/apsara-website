@@ -83,7 +83,7 @@ export function BuildShelf() {
       <div
         ref={zone}
         className={`relative overflow-hidden rounded-[2rem] p-6 transition-colors md:p-8 ${
-          over ? "bg-petal ring-2 ring-magenta" : "bg-[linear-gradient(180deg,#fce8ee,#fbe7c8)] ring-1 ring-ink/5"
+          over ? "bg-petal ring-2 ring-magenta" : "bg-[linear-gradient(180deg,#fff6f8,#fbe7c8)] ring-1 ring-ink/5"
         }`}
       >
         <p className="font-display text-3xl">My shelf</p>

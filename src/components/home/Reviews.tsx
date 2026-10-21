@@ -22,7 +22,7 @@ export function Reviews() {
   const p = productById[r.product];
 
   return (
-    <section>
+    <section className="bg-petal/60">
       <div className="mx-auto grid max-w-[1400px] gap-10 px-5 py-20 md:px-10 md:py-28 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
         <Reveal>
           <p className="eyebrow text-gold-deep">Reviews</p>

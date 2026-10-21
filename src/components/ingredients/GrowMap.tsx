@@ -31,7 +31,7 @@ export function GrowMap() {
   const ing = ingredients.find((i) => i.id === active)!;
 
   return (
-    <div className="grid items-center gap-8 overflow-hidden rounded-[2rem] bg-[linear-gradient(160deg,#fce8ee,#fae3ea)] p-6 md:p-10 lg:grid-cols-[1fr_1fr]">
+    <div className="grid items-center gap-8 overflow-hidden rounded-[2rem] bg-[linear-gradient(160deg,#fff6f8,#fae3ea)] p-6 md:p-10 lg:grid-cols-[1fr_1fr]">
       <svg viewBox="0 0 310 310" className="mx-auto w-full max-w-md">
         <defs>
           <linearGradient id="land" x1="0" x2="1" y1="0" y2="1">
@@ -55,7 +55,7 @@ export function GrowMap() {
               <motion.circle r={on ? 8 : 6} fill={i.color} stroke="#fff" strokeWidth={2} animate={{ r: on ? 8 : 6 }} />
               <circle r={14} fill="transparent" />
               {on && (
-                <text x={14} y={4} fontSize={11} fill="#0a1c10" className="font-medium" paintOrder="stroke" stroke="#fce8ee" strokeWidth={3}>
+                <text x={14} y={4} fontSize={11} fill="#0a1c10" className="font-medium" paintOrder="stroke" stroke="#fff6f8" strokeWidth={3}>
                   {i.name}
                 </text>
               )}

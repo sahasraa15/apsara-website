@@ -7,7 +7,7 @@ const order: Dosha[] = ["vata", "pitta", "kapha"];
 
 export function QuizTeaser() {
   return (
-    <section className="bg-[linear-gradient(180deg,transparent_0%,rgb(251_238_221/0.85)_50%,transparent_100%)] text-ink">
+    <section className="bg-[linear-gradient(180deg,#fff6f8_0%,#fbeedd_100%)] text-ink">
       <div className="mx-auto grid max-w-[1400px] items-center gap-12 px-5 py-20 md:px-10 md:py-28 lg:grid-cols-2">
         <Reveal>
           <p className="eyebrow text-gold-deep">Not sure where to start?</p>
